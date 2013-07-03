@@ -1,9 +1,11 @@
 BraegerCabinets::Application.routes.draw do
-  root :to => 'static_pages#home'
-  
-  match '/cabinets', to: 'static_pages#cabinets'
-  match '/drawer_fronts', to: 'static_pages#drawer_fronts'
-  match '/dovetail_drawers', to: 'static_pages#dovetail_drawers'
+  get "static_pages/home"
+
+  get "static_pages/cabinets"
+
+  get "static_pages/drawer_fronts"
+
+  get "static_pages/dovetail_drawers"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
