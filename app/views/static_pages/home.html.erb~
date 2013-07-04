@@ -1,2 +1,24 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Braeger Woodworking Inc. | Home</title>
+</head>
+<h1>Braeger App</h1>
+<p>
+  This is the home page for the
+  braeger application.
+</p>
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <nav>
+        <ul class="nav pull-right">
+          <li><%= link_to "Cabinets", cabinets_path %></li>
+          <li><%= link_to "Dovetail Drawers", dovetail_drawers_path %></li>
+          <li><%= link_to "Drawer Fronts", drawer_fronts_path %></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
