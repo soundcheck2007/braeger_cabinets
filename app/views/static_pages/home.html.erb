@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <nav>
-        <ul class="nav pull-right">
-          <li><%= link_to "Cabinets", cabinets_path %></li>
-          <li><%= link_to "Dovetail Drawers", dovetail_drawers_path %></li>
-          <li><%= link_to "Drawer Fronts", drawer_fronts_path %></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-</header>
 <head>
   <title>Braeger Woodworking Inc. | Home</title>
 </head>
-<h1>Braeger App</h1>
-<p>
-  This is the home page 2 for the
-  braeger application.
-</p>
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "Braeger Woodworking", root_path, id: "logo" %>
+    </div>
+  </div>
+</header>
+<div class="center hero-unit">
+  <h1>Welcome!</h1>
+  <h2>
+    Please select an application below
+  </h2>
+  <div></div>
+  <div style="font-size: 20px; font-weight: bold;">
+    <%= link_to "Dovetail Drawers", dovetail_drawers_path %>
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <%= link_to "Cabinets", cabinets_path %>       
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <%= link_to "Drawer Fronts", drawer_fronts_path %>
+  </div>
+</div>
 

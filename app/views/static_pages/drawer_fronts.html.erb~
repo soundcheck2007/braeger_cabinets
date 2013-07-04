@@ -1,2 +1,10 @@
-<h1>StaticPages#drawer_fronts</h1>
-<p>Find me in app/views/static_pages/drawer_fronts.html.erb</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Braeger Woodworking Inc. | Drawer Fronts</title>
+</head>
+<h1>Braeger App</h1>
+<p>
+  This is the drawer fronts page for the
+  braeger application.
+</p>

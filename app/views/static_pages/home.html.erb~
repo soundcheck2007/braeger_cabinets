@@ -1,13 +1,4 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Braeger Woodworking Inc. | Home</title>
-</head>
-<h1>Braeger App</h1>
-<p>
-  This is the home page for the
-  braeger application.
-</p>
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
@@ -21,4 +12,12 @@
     </div>
   </div>
 </header>
+<head>
+  <title>Braeger Woodworking Inc. | Home</title>
+</head>
+<h1>Braeger App</h1>
+<p>
+  This is the home page 2 for the
+  braeger application.
+</p>
 
