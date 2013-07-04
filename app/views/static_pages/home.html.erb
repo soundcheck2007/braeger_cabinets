@@ -10,7 +10,7 @@
   </div>
 </header>
 <div class="center hero-unit">
-  <h1>Welcome!</h1>
+  <h1 id="welcome">Good Morning!</h1>
   <h2>
     Please select an application below
   </h2>
@@ -23,4 +23,11 @@
     <%= link_to "Drawer Fronts", drawer_fronts_path %>
   </div>
 </div>
+
+<script>
+  var d = new Date().getHours();
+  if(d > 11) {
+    document.getElementById("welcome").innerHTML = "Good Afternoon!";
+  }
+</script>
 
