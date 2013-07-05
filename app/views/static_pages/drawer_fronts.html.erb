@@ -16,8 +16,31 @@
   </div>
 </header>
 <%= render 'layouts/job_header' %>
-<h1>Braeger App</h1>
-<p>
-  This is the drawer fronts page for the
-  braeger application.
-</p>
+<br />
+<div id="main_body">
+  <%= render 'layouts/body_header' %>
+</div>
+<%= render 'layouts/button_footer' %>
+
+<script>
+  var row_count= 0;
+  function add_rows(){
+    for(var i = 0; i < 10; i++){
+      $('#main_body').append("<%= escape_javascript("#{render 'layouts/body'}").html_safe %>");
+      $('#style_select').attr('id', $('#style_select').attr('id') + "_" + row_count);
+      add_options();
+      row_count++;
+    }
+  }
+  
+  function add_options(){
+    $('#style_select_' + row_count).append('<option value="0">5-piece, 1.25</option>');
+    $('#style_select_' + row_count).append('<option value="1">5-piece, 1.50</option>');
+    $('#style_select_' + row_count).append('<option value="2">5-piece, 1.75</option>');
+    $('#style_select_' + row_count).append('<option value="3">5-piece, 2.25</option>');
+    $('#style_select_' + row_count).append('<option value="4">Panel Front</option>');
+    $('#style_select_' + row_count).append('<option value="5">Slab</option>');
+  }
+  
+  add_rows();
+</script>

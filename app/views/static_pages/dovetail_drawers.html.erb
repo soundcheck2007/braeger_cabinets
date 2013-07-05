@@ -16,8 +16,27 @@
   </div>
 </header>
 <%= render 'layouts/alt_header' %>
-<h1>Braeger App</h1>
-<p>
-  This is the dovetail drawer page for the
-  braeger application.
-</p>
+<br />
+<div id="main_body">
+  <%= render 'layouts/body_header' %>
+</div>
+<%= render 'layouts/button_footer' %>
+
+<script>
+  var row_count= 0;
+  function add_rows(){
+    for(var i = 0; i < 10; i++){
+      $('#main_body').append("<%= escape_javascript("#{render 'layouts/body'}").html_safe %>");
+      $('#style_select').attr('id', $('#style_select').attr('id') + "_" + row_count);
+      add_options();
+      row_count++;
+    }
+  }
+  
+  function add_options(){
+    $('#style_select_' + row_count).append('<option value="0">Dovetail Regular</option>');
+    $('#style_select_' + row_count).append('<option value="1">Dovetail Pullout</option>');
+  }
+  
+  add_rows();
+</script>

@@ -26,7 +26,9 @@
 
 <script>
   var d = new Date().getHours();
-  if(d > 11) {
+  if(d >= 17) {
+    document.getElementById("welcome").innerHTML = "Good Evening!";
+  } else if(d > 11) {
     document.getElementById("welcome").innerHTML = "Good Afternoon!";
   }
 </script>
