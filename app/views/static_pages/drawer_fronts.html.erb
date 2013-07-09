@@ -28,6 +28,13 @@
     for(var i = 0; i < 10; i++){
       $('#main_body').append("<%= escape_javascript("#{render 'layouts/body'}").html_safe %>");
       $('#style_select').attr('id', $('#style_select').attr('id') + "_" + row_count);
+      $('#nbr').attr('id', $('#nbr').attr('id') + "_" + row_count);
+      $('#qty').attr('id', $('#qty').attr('id') + "_" + row_count);
+      $('#size').attr('id', $('#size').attr('id') + "_" + row_count);
+      $('#notes').attr('id', $('#notes').attr('id') + "_" + row_count);
+      $('#style_rail_info').attr('id', $('#style_rail_info').attr('id') + "_" + row_count);
+      $('#panel_info').attr('id', $('#panel_info').attr('id') + "_" + row_count);
+
       add_options();
       row_count++;
     }
@@ -40,6 +47,54 @@
     $('#style_select_' + row_count).append('<option value="3">5-piece, 2.25</option>');
     $('#style_select_' + row_count).append('<option value="4">Panel Front</option>');
     $('#style_select_' + row_count).append('<option value="5">Slab</option>');
+  }
+  
+  function calculate(){
+    var qty = op = style = pnlmsg = pnlinfo = "";
+    for(var i = 0; i < row_count; i++){
+      qty = $('#qty_' + i).val();
+      op = $('#size_' + i).val();
+      style = $('#style_select_' + i).val();
+      if (!(style == "4" || style == "5" || qty == 0 || op == "")){
+        pnlmsg = get_panel(qty, op.toUpperCase(), style);
+        //panel info is after the pipe
+        $('#style_rail_info_' + i).html(pnlmsg.substring(0, pnlmsg.indexOf("|")));
+        $('#panel_info_' + i).html(pnlmsg.substring(pnlmsg.indexOf("|") + 1));
+      }
+    }
+  }
+  
+  function get_panel(qty, op, style){
+    var msgone = msgtwo = pnlinfo = "";
+    var height = parseFloat(op.substring(op.indexOf('X') + 1));
+    var width = parseFloat(op.substring(0, op.indexOf('X')));
+    var pnlheight = pnlwidth = railheight = railwidth = trailwidth = brailwidth = stilewidth = 0;
+    switch(style){
+      case "0":
+        trailwidth = brailwidth = 1.25;
+        break;
+      case "1":
+        trailwidth = brailwidth = 1.5;
+        break;
+      case "2":
+        trailwidth = brailwidth = 1.75;
+        break;
+      case "3":
+        trailwidth = brailwidth = 2.25;
+        break;
+    }
+    
+    stilewidth = 2.25;
+    railwidth = width - 3.5;
+    msgone = qty * 2 + "  -  " + height + " X " + stilewidth + " stiles";
+	  msgtwo = qty * 2 + "  -  " + railwidth + " X " + trailwidth + " rails";
+	  
+	  pnlheight = (height - (trailwidth + brailwidth)) + .625;
+	  pnlwidth = (width - (stilewidth * 2) + 1) -.375;
+	  
+	  pnlinfo = qty + "  -  " + pnlwidth + " X " + pnlheight + " Panel";
+	  
+	  return msgone + "<br />" + msgtwo + "|" + pnlinfo;
   }
   
   add_rows();
