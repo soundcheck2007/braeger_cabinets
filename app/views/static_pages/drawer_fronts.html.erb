@@ -23,23 +23,7 @@
 <%= render 'layouts/button_footer' %>
 
 <script>
-  var row_count= 0;
-  function add_rows(){
-    for(var i = 0; i < 10; i++){
-      $('#main_body').append("<%= escape_javascript("#{render 'layouts/body'}").html_safe %>");
-      $('#style_select').attr('id', $('#style_select').attr('id') + "_" + row_count);
-      $('#nbr').attr('id', $('#nbr').attr('id') + "_" + row_count);
-      $('#qty').attr('id', $('#qty').attr('id') + "_" + row_count);
-      $('#size').attr('id', $('#size').attr('id') + "_" + row_count);
-      $('#notes').attr('id', $('#notes').attr('id') + "_" + row_count);
-      $('#style_rail_info').attr('id', $('#style_rail_info').attr('id') + "_" + row_count);
-      $('#panel_info').attr('id', $('#panel_info').attr('id') + "_" + row_count);
 
-      add_options();
-      row_count++;
-    }
-  }
-  
   function add_options(){
     $('#style_select_' + row_count).append('<option value="0">5-piece, 1.25</option>');
     $('#style_select_' + row_count).append('<option value="1">5-piece, 1.50</option>');
@@ -60,14 +44,17 @@
         //panel info is after the pipe
         $('#style_rail_info_' + i).html(pnlmsg.substring(0, pnlmsg.indexOf("|")));
         $('#panel_info_' + i).html(pnlmsg.substring(pnlmsg.indexOf("|") + 1));
+      } else if(style == "4" || style == "5") {
+        $('#style_rail_info_' + i).html("");
+        $('#panel_info_' + i).html("");
       }
     }
   }
   
   function get_panel(qty, op, style){
     var msgone = msgtwo = pnlinfo = "";
-    var height = parseFloat(op.substring(op.indexOf('X') + 1));
-    var width = parseFloat(op.substring(0, op.indexOf('X')));
+    var height = get_height(op);
+    var width = get_width(op);
     var pnlheight = pnlwidth = railheight = railwidth = trailwidth = brailwidth = stilewidth = 0;
     switch(style){
       case "0":
@@ -92,10 +79,9 @@
 	  pnlheight = (height - (trailwidth + brailwidth)) + .625;
 	  pnlwidth = (width - (stilewidth * 2) + 1) -.375;
 	  
-	  pnlinfo = qty + "  -  " + pnlwidth + " X " + pnlheight + " Panel";
+	  pnlinfo = qty + "  -  " + pnlwidth + " X " + pnlheight;
 	  
 	  return msgone + "<br />" + msgtwo + "|" + pnlinfo;
   }
   
-  add_rows();
 </script>

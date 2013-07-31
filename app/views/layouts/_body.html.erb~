@@ -1,13 +1,12 @@
-<div>
-  <input type="text" id="nbr" style="width: 30px; font-family: monospace; position: relative; left: -90px;" maxlength="3" />
-  <input type="text" id="qty" style="width: 30px; font-family: monospace; position: relative; left: -70px;" maxlength="3" />
-  <input type="text" id="size" style="width: 160px; font-family: monospace; position: relative; left: -40px;" maxlength="20" />
-  <select id="style_select" style="width: 200px; font-family: monospace; position: relative; left: 10px;">
+<div style="width: 1250px; position: relative; left: -150px; height: 50px;">
+  <input type="text" id="nbr" style="width: 30px; font-family: monospace; position: relative; left: 60px;" maxlength="3" />
+  <input type="text" id="qty" style="width: 30px; font-family: monospace; position: relative; left: 80px;" maxlength="3" />
+  <input type="text" id="size" style="width: 160px; font-family: monospace; position: relative; left: 95px;" maxlength="20" />
+  <select id="style_select" style="width: 200px; font-family: monospace; position: relative; left: 125px;">
   </select>
-  <div style="display: inline;">
-  </div>
-  <div style="display: inline;">
-  </div>
-  <input type="text" id="notes" style="width: 160px; font-family: monospace; position: relative; left: 365px;" maxlength="20" />
-  <input type="hidden" id="done" />
+  <span id="style_rail_info" style="display: inline-block; font-family: monospace; position: absolute; left: 610px; border-bottom: 2px solid black;" >
+  </span>
+  <span id="panel_info" style="display: inline-block; font-family: monospace; position: absolute; left: 836px;" >
+  </span>
+  <input type="text" id="notes" style="width: 160px; font-family: monospace; position: absolute; left: 1025px;" maxlength="20" />
 </div>

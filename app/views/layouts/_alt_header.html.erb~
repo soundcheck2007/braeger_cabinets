@@ -15,7 +15,7 @@
   <br />
   <div>
     NOTES: 
-    <select style="width: 250px" id="bottom_selector">
+    <select style="width: 250px">
       <option value="1">Recess Bottom 1/2, Removeable</option>
       <option value="2">Recess Bottom 1/2, Stationary</option>
       <option value="3">Recess Bottom 1/4, Removeable</option>
