@@ -34,4 +34,28 @@
     $('#style_select_' + row_count).append('<option value="6">Square</option>');
   }
 
+  function calculate(){
+    var qty = op = style = panel_msg = style_rail_msg = bottom = "";
+    for(var i = 0; i < row_count; i++){
+      qty = $('#qty_' + i).val();
+      op = $('#size_' + i).val();
+      if (!(qty == 0 || op == "")){
+        style = $('#style_select_' + i).val();
+        panel_msg = "&nbsp;&nbsp;&nbsp;&nbsp;Glass";
+        style_rail_msg = get_style_and_rail(qty, op.toUpperCase(), style);
+        if(style != 2 && style != 3 && style != 4 && style != 5){
+          panel_msg = get_panel_cabinets(qty, op.toUpperCase());
+        }
+        $('#style_rail_info_' + i).html(style_rail_msg);
+        $('#panel_info_' + i).html(panel_msg);
+        $('#style_rail_info_' + i).css({"color": "black"});
+        $('#panel_info_' + i).css({"color": "black"});
+        if(extra_room){
+          $('#notes_' + i).parent().height(70);
+          extra_room = false;
+        }
+      }
+    }
+  }
+  
 </script>

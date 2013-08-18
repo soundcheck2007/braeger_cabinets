@@ -40,48 +40,17 @@
       op = $('#size_' + i).val();
       style = $('#style_select_' + i).val();
       if (!(style == "4" || style == "5" || qty == 0 || op == "")){
-        pnlmsg = get_panel(qty, op.toUpperCase(), style);
+        pnlmsg = get_panel_fronts(qty, op.toUpperCase(), style);
         //panel info is after the pipe
         $('#style_rail_info_' + i).html(pnlmsg.substring(0, pnlmsg.indexOf("|")));
         $('#panel_info_' + i).html(pnlmsg.substring(pnlmsg.indexOf("|") + 1));
+        $('#style_rail_info_' + i).css({"color": "black"});
+        $('#panel_info_' + i).css({"color": "black"});
       } else if(style == "4" || style == "5") {
         $('#style_rail_info_' + i).html("");
         $('#panel_info_' + i).html("");
       }
     }
-  }
-  
-  function get_panel(qty, op, style){
-    var msgone = msgtwo = pnlinfo = "";
-    var height = get_height(op);
-    var width = get_width(op);
-    var pnlheight = pnlwidth = railheight = railwidth = trailwidth = brailwidth = stilewidth = 0;
-    switch(style){
-      case "0":
-        trailwidth = brailwidth = 1.25;
-        break;
-      case "1":
-        trailwidth = brailwidth = 1.5;
-        break;
-      case "2":
-        trailwidth = brailwidth = 1.75;
-        break;
-      case "3":
-        trailwidth = brailwidth = 2.25;
-        break;
-    }
-    
-    stilewidth = 2.25;
-    railwidth = width - 3.5;
-    msgone = qty * 2 + "  -  " + height + " X " + stilewidth + " stiles";
-	  msgtwo = qty * 2 + "  -  " + railwidth + " X " + trailwidth + " rails";
-	  
-	  pnlheight = (height - (trailwidth + brailwidth)) + .625;
-	  pnlwidth = (width - (stilewidth * 2) + 1) -.375;
-	  
-	  pnlinfo = qty + "  -  " + pnlwidth + " X " + pnlheight;
-	  
-	  return msgone + "<br />" + msgtwo + "|" + pnlinfo;
   }
   
 </script>

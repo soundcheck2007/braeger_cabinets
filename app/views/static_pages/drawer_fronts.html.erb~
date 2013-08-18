@@ -79,7 +79,7 @@
 	  pnlheight = (height - (trailwidth + brailwidth)) + .625;
 	  pnlwidth = (width - (stilewidth * 2) + 1) -.375;
 	  
-	  pnlinfo = qty + "  -  " + pnlwidth + " X " + pnlheight + " Panel";
+	  pnlinfo = qty + "  -  " + pnlwidth + " X " + pnlheight;
 	  
 	  return msgone + "<br />" + msgtwo + "|" + pnlinfo;
   }

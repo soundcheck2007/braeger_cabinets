@@ -29,36 +29,6 @@
     $('#style_select_' + row_count).append('<option value="1">Dovetail Pullout</option>');
   }
   
-  function get_parts(qty, door_size, selection, bottom){
-    var height = get_height(door_size);
-    var width = get_width(door_size);
-    var depth = get_depth(door_size);
-    var parts = b_width = b_depth = bottom_msg = "";
-    var qty_d = qty * 2;
-
-    //bottom panel depth
-    if(bottom == "1" || bottom == "3"){
-      b_depth = depth - .4375;
-    } else {
-      b_depth = depth - .8125; 
-    }
-    switch(selection){
-      case "0":
-        parts = qty_d + " - " + width + " X " + height + " F & B";
-        b_width = width - .8125;
-        break;
-      case "1":
-        //panel front
-        parts = qty + " - " + width + " X " + height + " Front";
-        parts = parts + "<br />" + qty + " - " + (width - .5) + " X " + height + " Back";
-        b_width = width - .5 - .8125;
-        break;
-    }
-    
-    bottom = qty + " - " + b_width + " X " + b_depth;
-    return parts + "<br />" + qty_d + " - " + (depth - .5) + " X " + height + " Sides|" + bottom;
-  }
-  
   function calculate(){
     var qty = op = style = parts_msg = bottom = "";
     for(var i = 0; i < row_count; i++){
@@ -71,6 +41,8 @@
         //bottom info is after the pipe
         $('#style_rail_info_' + i).html(parts_msg.substring(0, parts_msg.indexOf("|")));
         $('#panel_info_' + i).html(parts_msg.substring(parts_msg.indexOf("|") + 1));
+        $('#style_rail_info_' + i).css({"color": "black"});
+        $('#panel_info_' + i).css({"color": "black"});
         //add break for 3rd line for pullout drawers
         if(style == "1"){
           $('#notes_' + i).parent().height(70);

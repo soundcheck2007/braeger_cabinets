@@ -23,23 +23,6 @@
 <%= render 'layouts/button_footer' %>
 
 <script>
-  var row_count= 0;
-  function add_rows(){
-    for(var i = 0; i < 10; i++){
-      $('#main_body').append("<%= escape_javascript("#{render 'layouts/body'}").html_safe %>");
-      $('#style_select').attr('id', $('#style_select').attr('id') + "_" + row_count);
-      $('#nbr').attr('id', $('#nbr').attr('id') + "_" + row_count);
-      $('#qty').attr('id', $('#qty').attr('id') + "_" + row_count);
-      $('#size').attr('id', $('#size').attr('id') + "_" + row_count);
-      $('#notes').attr('id', $('#notes').attr('id') + "_" + row_count);
-      $('#done').attr('id', $('#done').attr('id') + "_" + row_count);
-      $('#style_rail_info').attr('id', $('#style_rail_info').attr('id') + "_" + row_count);
-      $('#panel_info').attr('id', $('#panel_info').attr('id') + "_" + row_count);
-      
-      add_options();
-      row_count++;
-    }
-  }
   
   function add_options(){
     $('#style_select_' + row_count).append('<option value="0">Arch</option>');
@@ -50,6 +33,5 @@
     $('#style_select_' + row_count).append('<option value="5">Glass Square</option>');
     $('#style_select_' + row_count).append('<option value="6">Square</option>');
   }
-  add_rows();
-  
+
 </script>
