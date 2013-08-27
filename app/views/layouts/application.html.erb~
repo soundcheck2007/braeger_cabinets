@@ -15,3 +15,186 @@
     </div>
   </body>
 </html>
+<script>
+  var row_count = 0;
+  var extra_room = false;
+  
+  function add_rows(){
+    for(var i = 0; i < 10; i++){
+      $('#main_body').append("<%= escape_javascript("#{render 'layouts/body'}").html_safe %>");
+      $('#style_select').attr('id', $('#style_select').attr('id') + "_" + row_count);
+      $('#nbr').attr('id', $('#nbr').attr('id') + "_" + row_count);
+      $('#qty').attr('id', $('#qty').attr('id') + "_" + row_count);
+      $('#size').attr('id', $('#size').attr('id') + "_" + row_count);
+      $('#notes').attr('id', $('#notes').attr('id') + "_" + row_count);
+      $('#style_rail_info').attr('id', $('#style_rail_info').attr('id') + "_" + row_count);
+      $('#panel_info').attr('id', $('#panel_info').attr('id') + "_" + row_count);
+
+      add_options();
+      row_count++;
+    }
+  }
+  
+  function get_height(size) {
+    return parseFloat(size.substring(size.lastIndexOf('X') + 1));
+  }
+  
+  function get_width(size) {
+    return parseFloat(size.substring(0, size.indexOf('X')));
+  }
+  
+  function get_depth(size) {
+    return parseFloat(size.substring(size.indexOf('X') + 1), size.lastIndexOf('X'));
+  }
+  
+  function get_panel_fronts(qty, op, style){
+    var msgone = msgtwo = pnlinfo = "";
+    var height = get_height(op);
+    var width = get_width(op);
+    var pnlheight = pnlwidth = railheight = railwidth = trailwidth = brailwidth = stilewidth = 0;
+    switch(style){
+      case "0":
+        trailwidth = brailwidth = 1.25;
+        break;
+      case "1":
+        trailwidth = brailwidth = 1.5;
+        break;
+      case "2":
+        trailwidth = brailwidth = 1.75;
+        break;
+      case "3":
+        trailwidth = brailwidth = 2.25;
+        break;
+    }
+    
+    stilewidth = 2.25;
+    railwidth = width - 3.5;
+    msgone = qty * 2 + "  -  " + height + " X " + stilewidth + " stiles";
+	  msgtwo = qty * 2 + "  -  " + railwidth + " X " + trailwidth + " rails";
+	  
+	  pnlheight = (height - (trailwidth + brailwidth)) + .625;
+	  pnlwidth = (width - (stilewidth * 2) + 1) -.375;
+	  
+	  pnlinfo = qty + "  -  " + pnlwidth + " X " + pnlheight;
+	  
+	  return msgone + "<br />" + msgtwo + "|" + pnlinfo;
+  }
+  
+  function get_parts(qty, door_size, selection, bottom){
+    var height = get_height(door_size);
+    var width = get_width(door_size);
+    var depth = get_depth(door_size);
+    var parts = b_width = b_depth = bottom_msg = "";
+    var qty_d = qty * 2;
+
+    //bottom panel depth
+    if(bottom == "1" || bottom == "3"){
+      b_depth = depth - .4375;
+    } else {
+      b_depth = depth - .8125; 
+    }
+    switch(selection){
+      case "0":
+        parts = qty_d + " - " + width + " X " + height + " F & B";
+        b_width = width - .8125;
+        break;
+      case "1":
+        //panel front
+        parts = qty + " - " + width + " X " + height + " Front";
+        parts = parts + "<br />" + qty + " - " + (width - .5) + " X " + height + " Back";
+        b_width = width - .5 - .8125;
+        break;
+    }
+    
+    bottom = qty + " - " + b_width + " X " + b_depth;
+    return parts + "<br />" + qty_d + " - " + (depth - .5) + " X " + height + " Sides|" + bottom;
+  }
+  
+  function get_style_and_rail(qty, size, style){
+    var height = get_height(size);
+    var width = get_width(size);
+    var custom_height = height;
+    var custom_width = width;
+    var custom_qty = qty;
+    var stile_height = stile_width = rail_height = rail_width = top_rail_height = top_rail_width = bottom_rail_height = bottom_rail_width = 0;
+    var msg_one = msg_two = msg_three = msg_full = "";
+    
+    stile_height = height;
+    stile_width = 2.25;
+    bottom_rail_height = 2.25;
+    
+    switch(style) {
+      case "0":
+        top_rail_width = width - 3.5;
+        top_rail_height = 3.25;
+        bottom_rail_width = width - 3.5;
+        msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        msg_two = qty + " - " + top_rail_width + " X " + top_rail_height + " T.R.";
+        msg_three = "<br />" + qty + " - " + bottom_rail_width + " X " + bottom_rail_height + " B.R.";
+        break;
+      case "1":
+        top_rail_width = width - 3.5;
+        top_rail_height = 4;
+        bottom_rail_width = width - 3.5;
+        msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        msg_two = qty + " - " + top_rail_width + " X " + top_rail_height + " T.R.";
+        msg_three = "<br />" + qty + " - " + bottom_rail_width + " X " + bottom_rail_height + " B.R.";
+        break;
+      case "2":
+        alert("Custom!");
+        break;
+      case "3":
+        top_rail_width = width - 3.25;
+        top_rail_height = 3.25;
+        bottom_rail_width = width - 3.25;
+        msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        msg_two = qty + " - " + top_rail_width + " X " + top_rail_height + " T.R.";
+        msg_three = "<br />" + qty + " - " + bottom_rail_width + " X " + bottom_rail_height + " B.R.";
+        break;
+      case "4":
+        top_rail_width = width - 3.25;
+        top_rail_height = 4;
+        bottom_rail_width = width - 3.25;
+        msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        msg_two = qty + " - " + top_rail_width + " X " + top_rail_height + " T.R.";
+        msg_three = "<br />" + qty + " - " + bottom_rail_width + " X " + bottom_rail_height + " B.R.";
+        break;
+      case "5":
+        rail_width = width - 3.25;
+        msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        msg_two = qty * 2 + " - " + rail_width + " X " + bottom_rail_height + " rails";
+        break;
+      case "6":
+        rail_width = width - 3.5;
+        msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        msg_two = qty + " - " + rail_width + " X " + bottom_rail_height + " rails";
+        break;
+    }
+    
+    if(msg_three != ""){ 
+      extra_room = true;
+    }
+    
+    msg_full = msg_one + "<br />" + msg_two + msg_three;
+    
+    return msg_full;
+  }
+  
+  function get_panel_cabinets(qty, size){
+    var height = get_height(size);
+    var width = get_width(size);
+    return qty + " - " + (width - 3.875) + " X " + (height - 3.875);
+  }
+  
+  function highlight_info(id) {
+    id = id.substring(id.lastIndexOf("_") + 1);
+    if($('#style_rail_info_' + id).html() != ""){
+      $('#style_rail_info_' + id).css({"color": "red"});
+      $('#panel_info_' + id).css({"color": "red"});
+    }
+  }
+  
+  $(document).ready(function() {
+    add_rows();
+  });
+</script>

@@ -13,6 +13,88 @@
       <%= yield %>
       <%= render 'layouts/footer' %>
     </div>
+    
+    <div id="custom_screen" class="custom">
+      <table>
+        <tr>
+          <td class="right">
+            <span>Custom Type:</span>
+          </td>
+          <td>
+            <select id="custom_select">
+              <option value="0">Glass Custom</option>
+              <option value="1">Regular Custom</option>
+              <option value="2">Horizontal Split</option>
+              <option value="3">Vertical Split</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="right">
+            <span>Stile Width:</span> 
+          </td>
+          <td>
+            <input id="custom_stile" type="text" size="20" />
+          </td>
+        </tr>
+        <tr>
+          <td  class="right">
+            <span>Top Rail Width:</span>
+          </td>
+          <td>
+            <input id="custom_top_rail" type="text" size="20" />
+          </td>
+        </tr>
+        <tr>
+          <td  class="right">
+            <span>Bottom Rail Width:</span> 
+          </td>
+          <td>
+            <input id="custom_bottom_rail" type="text" size="20" />
+          </td>
+        </tr>
+        <tr>
+          <td  class="right">
+            <span>Center Rail Width:</span> 
+          </td>
+          <td>
+            <input id="custom_center_rail" type="text" size="20" />
+          </td>
+        </tr>
+        <tr>
+          <td class="right">
+            <span>Horizontal Split:</span> 
+          </td>
+          <td>
+            <input id="custom_horizontal" type="text" size="20" />
+          </td>
+        </tr>
+        <tr>
+          <td class="right">
+            <span>Vertical Split:</span> 
+          </td>
+          <td>
+            <input id="custom_vertical" type="text" size="20" />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <table width="100%">
+              <tr>
+                <td width="50%" class="right pad_right">
+                  <button class="custom_screen_close btn btn-large btn-primary" onclick="custom_screen_calculate();">Enter</button>
+                </td>
+                <td width="50%" class="left pad_left">
+                  <button class="custom_screen_close btn btn-large btn-primary">Close</button>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <input type="hidden" id="hidden_id" value="">
   </body>
 </html>
 <script>
@@ -192,7 +274,20 @@
       $('#style_rail_info_' + id).css({"color": "red"});
       $('#panel_info_' + id).css({"color": "red"});
     }
+    
+    //This will open the custom panel page
+    if($('#style_select_' + id).val() == "2") {
+      $('#hidden_id').val(id);
+    }
   }
+  
+  function custom_screen_calculate() {
+    // hidden_id contains id of the row that custom was chosen on
+  }
+  
+  $(function() {
+    $('#custom_screen').popup();
+  });
   
   $(document).ready(function() {
     add_rows();
