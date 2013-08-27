@@ -11,8 +11,6 @@
  *= require_self
  *= require_tree .
  */
- 
-/*@import "bootstrap";*/
 
 .popup_background {
   z-index: 2000; /* any number */
