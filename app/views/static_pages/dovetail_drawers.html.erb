@@ -31,12 +31,14 @@
   
   function calculate(){
     var qty = op = style = parts_msg = bottom = "";
+    arr_total = [];
+    arr_denom = [];
     for(var i = 0; i < row_count; i++){
       qty = $('#qty_' + i).val();
       op = $('#size_' + i).val();
       style = $('#style_select_' + i).val();
       bottom = $('#bottom_selector').val();
-      if (!(qty == 0 || op == "")){
+      if (!(qty == 0 || op == "")  && op.match(/x/g).length == 2){
         parts_msg = get_parts(qty, op.toUpperCase(), style, bottom);
         //bottom info is after the pipe
         $('#style_rail_info_' + i).html(parts_msg.substring(0, parts_msg.indexOf("|")));

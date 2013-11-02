@@ -35,12 +35,18 @@
   }
 
   function calculate(){
+    arr_total = [];
+    arr_denom = [];
     var qty = op = style = panel_msg = style_rail_msg = bottom = "";
     for(var i = 0; i < row_count; i++){
       qty = $('#qty_' + i).val();
       op = $('#size_' + i).val();
-      if (!(qty == 0 || op == "")){
+      if (!(qty == 0 || op == "") && op.match(/x/g).length == 1){
         style = $('#style_select_' + i).val();
+        //skip processing when custom 
+        if (style == 2) {
+          continue;
+        }
         panel_msg = "&nbsp;&nbsp;&nbsp;&nbsp;Glass";
         style_rail_msg = get_style_and_rail(qty, op.toUpperCase(), style);
         if(style != 2 && style != 3 && style != 4 && style != 5){

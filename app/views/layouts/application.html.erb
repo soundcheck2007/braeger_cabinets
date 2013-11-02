@@ -13,86 +13,87 @@
       <%= yield %>
       <%= render 'layouts/footer' %>
     </div>
-    
-    <div id="custom_screen" class="custom">
-      <table>
-        <tr>
-          <td class="right">
-            <span>Custom Type:</span>
-          </td>
-          <td>
-            <select id="custom_select">
-              <option value="0">Glass Custom</option>
-              <option value="1">Regular Custom</option>
-              <option value="2">Horizontal Split</option>
-              <option value="3">Vertical Split</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td class="right">
-            <span>Stile Width:</span> 
-          </td>
-          <td>
-            <input id="custom_stile" type="text" size="20" />
-          </td>
-        </tr>
-        <tr>
-          <td  class="right">
-            <span>Top Rail Width:</span>
-          </td>
-          <td>
-            <input id="custom_top_rail" type="text" size="20" />
-          </td>
-        </tr>
-        <tr>
-          <td  class="right">
-            <span>Bottom Rail Width:</span> 
-          </td>
-          <td>
-            <input id="custom_bottom_rail" type="text" size="20" />
-          </td>
-        </tr>
-        <tr>
-          <td  class="right">
-            <span>Center Rail Width:</span> 
-          </td>
-          <td>
-            <input id="custom_center_rail" type="text" size="20" />
-          </td>
-        </tr>
-        <tr>
-          <td class="right">
-            <span>Horizontal Split:</span> 
-          </td>
-          <td>
-            <input id="custom_horizontal" type="text" size="20" />
-          </td>
-        </tr>
-        <tr>
-          <td class="right">
-            <span>Vertical Split:</span> 
-          </td>
-          <td>
-            <input id="custom_vertical" type="text" size="20" />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <table width="100%">
-              <tr>
-                <td width="50%" class="right pad_right">
-                  <button class="custom_screen_close btn btn-large btn-primary" onclick="custom_screen_calculate();">Enter</button>
-                </td>
-                <td width="50%" class="left pad_left">
-                  <button class="custom_screen_close btn btn-large btn-primary">Close</button>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </div>
+    <% if ! (content_for :title).include?("Drawer") %>
+      <div id="custom_screen" class="custom">
+        <table>
+          <tr>
+            <td class="right">
+              <span>Custom Type:</span>
+            </td>
+            <td>
+              <select id="custom_select" onClick="disable_custom_elements();">
+                <option value="0">Glass Custom</option>
+                <option value="1">Regular Custom</option>
+                <option value="2">Horizontal Split</option>
+                <option value="3">Vertical Split</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="right">
+              <span>Stile Width:</span> 
+            </td>
+            <td>
+              <input id="custom_stile" type="text" size="20" />
+            </td>
+          </tr>
+          <tr>
+            <td  class="right">
+              <span>Top Rail Width:</span>
+            </td>
+            <td>
+              <input id="custom_top_rail" type="text" size="20" />
+            </td>
+          </tr>
+          <tr>
+            <td  class="right">
+              <span>Bottom Rail Width:</span> 
+            </td>
+            <td>
+              <input id="custom_bottom_rail" type="text" size="20" />
+            </td>
+          </tr>
+          <tr>
+            <td  class="right">
+              <span>Center Rail Width:</span> 
+            </td>
+            <td>
+              <input id="custom_center_rail" type="text" size="20" />
+            </td>
+          </tr>
+          <tr>
+            <td class="right">
+              <span>Horizontal Split:</span> 
+            </td>
+            <td>
+              <input id="custom_horizontal" type="text" size="20" />
+            </td>
+          </tr>
+          <tr>
+            <td class="right">
+              <span>Vertical Split:</span> 
+            </td>
+            <td>
+              <input id="custom_vertical" type="text" size="20" />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <table width="100%">
+                <tr>
+                  <td width="50%" class="right pad_right">
+                    <button class="custom_screen_close btn btn-large btn-primary" onclick="custom_screen_calculate();">Enter</button>
+                  </td>
+                  <td width="50%" class="left pad_left">
+                    <button class="custom_screen_close btn btn-large btn-primary">Close</button>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <% end %>
 
     <input type="hidden" id="hidden_id" value="">
   </body>
@@ -100,6 +101,8 @@
 <script>
   var row_count = 0;
   var extra_room = false;
+  var arr_denom = new Array();
+  var arr_total = new Array();
   
   function add_rows(){
     for(var i = 0; i < 10; i++){
@@ -153,6 +156,8 @@
     railwidth = width - 3.5;
     msgone = qty * 2 + "  -  " + height + " X " + stilewidth + " stiles";
 	  msgtwo = qty * 2 + "  -  " + railwidth + " X " + trailwidth + " rails";
+    add_values_to_totals(qty * 2, height, stilewidth);
+    add_values_to_totals(qty * 2, railwidth, trailwidth);
 	  
 	  pnlheight = (height - (trailwidth + brailwidth)) + .625;
 	  pnlwidth = (width - (stilewidth * 2) + 1) -.375;
@@ -178,16 +183,19 @@
     switch(selection){
       case "0":
         parts = qty_d + " - " + width + " X " + height + " F & B";
+        add_values_to_totals(qty_d, width, height);
         b_width = width - .8125;
         break;
       case "1":
         //panel front
         parts = qty + " - " + width + " X " + height + " Front";
+        add_values_to_totals(qty, width, height);
         parts = parts + "<br />" + qty + " - " + (width - .5) + " X " + height + " Back";
+        add_values_to_totals(qty, (width - .5), height);
         b_width = width - .5 - .8125;
         break;
     }
-    
+    add_values_to_totals(qty_d, (depth - .5), height);
     bottom = qty + " - " + b_width + " X " + b_depth;
     return parts + "<br />" + qty_d + " - " + (depth - .5) + " X " + height + " Sides|" + bottom;
   }
@@ -211,16 +219,22 @@
         top_rail_height = 3.25;
         bottom_rail_width = width - 3.5;
         msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        add_values_to_totals(qty * 2, stile_height, stile_width);
         msg_two = qty + " - " + top_rail_width + " X " + top_rail_height + " T.R.";
+        add_values_to_totals(qty, top_rail_width, top_rail_height);
         msg_three = "<br />" + qty + " - " + bottom_rail_width + " X " + bottom_rail_height + " B.R.";
+        add_values_to_totals(qty, bottom_rail_width, bottom_rail_height);
         break;
       case "1":
         top_rail_width = width - 3.5;
         top_rail_height = 4;
         bottom_rail_width = width - 3.5;
         msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        add_values_to_totals(qty * 2, stile_height, stile_width);
         msg_two = qty + " - " + top_rail_width + " X " + top_rail_height + " T.R.";
+        add_values_to_totals(qty, top_rail_width, top_rail_height);
         msg_three = "<br />" + qty + " - " + bottom_rail_width + " X " + bottom_rail_height + " B.R.";
+        add_values_to_totals(qty, bottom_rail_width, bottom_rail_height);
         break;
       case "2":
         break;
@@ -229,26 +243,36 @@
         top_rail_height = 3.25;
         bottom_rail_width = width - 3.25;
         msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        add_values_to_totals(qty * 2, stile_height, stile_width);
         msg_two = qty + " - " + top_rail_width + " X " + top_rail_height + " T.R.";
+        add_values_to_totals(qty, top_rail_width, top_rail_height);
         msg_three = "<br />" + qty + " - " + bottom_rail_width + " X " + bottom_rail_height + " B.R.";
+        add_values_to_totals(qty, bottom_rail_width, bottom_rail_height);
         break;
       case "4":
         top_rail_width = width - 3.25;
         top_rail_height = 4;
         bottom_rail_width = width - 3.25;
         msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        add_values_to_totals(qty * 2, stile_height, stile_width);
         msg_two = qty + " - " + top_rail_width + " X " + top_rail_height + " T.R.";
+        add_values_to_totals(qty, top_rail_width, top_rail_height);
         msg_three = "<br />" + qty + " - " + bottom_rail_width + " X " + bottom_rail_height + " B.R.";
+        add_values_to_totals(qty, bottom_rail_width, bottom_rail_height);
         break;
       case "5":
         rail_width = width - 3.25;
         msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        add_values_to_totals(qty * 2, stile_height, stile_width);
         msg_two = qty * 2 + " - " + rail_width + " X " + bottom_rail_height + " rails";
+        add_values_to_totals(qty * 2, rail_width, bottom_rail_height);
         break;
       case "6":
         rail_width = width - 3.5;
         msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " stiles";
+        add_values_to_totals(qty * 2, stile_height, stile_width);
         msg_two = qty + " - " + rail_width + " X " + bottom_rail_height + " rails";
+        add_values_to_totals(qty, rail_width, bottom_rail_height);
         break;
     }
     
@@ -278,6 +302,8 @@
     if($('#style_select_' + id).val() == "2") {
       $('#hidden_id').val(id);
       $("#custom_screen_wrapper").fadeIn();
+      $('#custom_horizontal').attr('disabled', 'disabled');
+      $('#custom_vertical').attr('disabled', 'disabled');      
     }
   }
   
@@ -377,8 +403,11 @@
     }
     
     msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " Stiles<br />";
+    add_values_to_totals(qty * 2, stile_height, stile_width);
     msg_two = qty + " - " + top_rail_height + " X " + top_rail_width + " T.R.<br />";
+    add_values_to_totals(qty, top_rail_height, top_rail_width);
     msg_three = qty + " - " + bottom_rail_height + " X " + bottom_rail_width + " B.R.";
+    add_values_to_totals(qty, bottom_rail_height, bottom_rail_width);
     
     msg_full = msg_one + msg_two + msg_three + msg_four;
     if(panel_msg == "") {
@@ -405,7 +434,34 @@
     panel_width = (width - (stile_width * 2) + 1) - .375;
     return qty + " - " + panel_width + " X " + panel_height;
   }
+
+  function add_values_to_totals(qty, height, width) {
+    var pos = jQuery.inArray(width, arr_denom);
+    var total = "";
+    if (pos == -1) {
+      arr_denom.push(width);
+      arr_total.push(height * qty);
+    } else {
+      arr_total[pos] += (height * qty);
+    }
+    for(var i = 0; i < arr_total.length; i++) {
+      total += "Need: " + arr_total[i] + " of " + arr_denom[i] + "; ";
+    }
+    $('#txt_totals').val(total);
+  }
   
+  function disable_custom_elements() {
+    if ($('#custom_select').val() == 2) {
+      $('#custom_horizontal').removeAttr('disabled');
+      $('#custom_vertical').attr('disabled', 'disabled');
+    } else if ($('#custom_select').val() == 3) {
+      $('#custom_vertical').removeAttr('disabled');
+      $('#custom_horizontal').attr('disabled', 'disabled');
+    } else {
+      $('#custom_vertical').attr('disabled', 'disabled');
+      $('#custom_horizontal').attr('disabled', 'disabled');
+    }
+  }
   $(function() {
     $('#custom_screen').popup();
   });

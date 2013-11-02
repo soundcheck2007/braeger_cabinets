@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Braeger Woodworking Inc. | Drawer Fronts</title>
+  <% content_for :title, "Braeger Woodworking Inc. | Drawer Fronts" %>
+  <title><%= content_for :title %></title>
 </head>
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
@@ -18,7 +19,7 @@
 <%= render 'layouts/job_header' %>
 <br />
 <div id="main_body">
-  <%= render 'layouts/body_header' %>
+  <%= render 'layouts/drawer_front_body_header' %>
 </div>
 <%= render 'layouts/button_footer' %>
 
@@ -35,11 +36,13 @@
   
   function calculate(){
     var qty = op = style = pnlmsg = pnlinfo = "";
+    arr_total = [];
+    arr_denom = [];
     for(var i = 0; i < row_count; i++){
       qty = $('#qty_' + i).val();
       op = $('#size_' + i).val();
       style = $('#style_select_' + i).val();
-      if (!(style == "4" || style == "5" || qty == 0 || op == "")){
+      if (!(style == "4" || style == "5" || qty == 0 || op == "")  && op.match(/x/g).length == 1){
         pnlmsg = get_panel_fronts(qty, op.toUpperCase(), style);
         //panel info is after the pipe
         $('#style_rail_info_' + i).html(pnlmsg.substring(0, pnlmsg.indexOf("|")));
