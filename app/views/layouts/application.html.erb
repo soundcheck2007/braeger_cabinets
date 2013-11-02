@@ -103,6 +103,10 @@
   var extra_room = false;
   var arr_denom = new Array();
   var arr_total = new Array();
+  var arr_custom_denom = new Array();
+  var arr_custom_total = new Array();
+  var arr_custom_ids = new Array();
+  var arr_custom_qtys = new Array();
   
   function add_rows(){
     for(var i = 0; i < 10; i++){
@@ -402,12 +406,14 @@
         break;
     }
     
+    check_existing_id(id);
+
     msg_one = qty * 2 + " - " + stile_height + " X " + stile_width + " Stiles<br />";
-    add_values_to_totals(qty * 2, stile_height, stile_width);
+    add_custom_values(id, qty * 2, stile_height, stile_width);
     msg_two = qty + " - " + top_rail_height + " X " + top_rail_width + " T.R.<br />";
-    add_values_to_totals(qty, top_rail_height, top_rail_width);
+    add_custom_values(id, qty, top_rail_height, top_rail_width);
     msg_three = qty + " - " + bottom_rail_height + " X " + bottom_rail_width + " B.R.";
-    add_values_to_totals(qty, bottom_rail_height, bottom_rail_width);
+    add_custom_values(id, qty, bottom_rail_height, bottom_rail_width);
     
     msg_full = msg_one + msg_two + msg_three + msg_four;
     if(panel_msg == "") {
@@ -423,6 +429,8 @@
     } else {
       $('#notes_' + id).parent().height(70);
     }
+
+    calculate();
   }
   
   function custom_panel_calculate(height, width, qty) {
@@ -448,6 +456,33 @@
       total += "Need: " + arr_total[i] + " of " + arr_denom[i] + "; ";
     }
     $('#txt_totals').val(total);
+  }
+
+  function add_custom_values(id, qty, height, width) {
+    arr_custom_ids.push(id);
+    arr_custom_denom.push(width);
+    arr_custom_total.push(height);
+    arr_custom_qtys.push(qty);
+  }
+
+  function check_existing_id(id) {
+    var pos = jQuery.inArray(id.toString(), arr_custom_ids);
+    if (pos > -1){
+      for(var i = 0; i < arr_custom_ids.length; i++) {
+        arr_custom_ids[i] = -1;
+        arr_custom_total[i] = -1;
+        arr_custom_qtys[i] = -1;
+        arr_custom_denom[i] = -1;
+      }
+    }
+  }
+
+  function add_custom_values_to_totals() {
+    for(var i = 0; i < arr_custom_total.length; i++) {
+      if (arr_custom_total[i] != -1) {
+        add_values_to_totals(arr_custom_qtys[i], arr_custom_total[i], arr_custom_denom[i]);
+      }
+    }
   }
   
   function disable_custom_elements() {

@@ -37,10 +37,17 @@
   function calculate(){
     arr_total = [];
     arr_denom = [];
+    $('#txt_totals').val("");
     var qty = op = style = panel_msg = style_rail_msg = bottom = "";
     for(var i = 0; i < row_count; i++){
       qty = $('#qty_' + i).val();
       op = $('#size_' + i).val();
+      if(qty == "" && op == "") {
+        $('#style_rail_info_' + i).html("");
+        $('#panel_info_' + i).html("");
+        $('#notes_' + i).parent().height(50);
+        check_existing_id(i);
+      }
       if (!(qty == 0 || op == "") && op.match(/x/g).length == 1){
         style = $('#style_select_' + i).val();
         //skip processing when custom 
@@ -62,6 +69,8 @@
         }
       }
     }
+
+    add_custom_values_to_totals();
   }
   
 </script>
