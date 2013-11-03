@@ -1,17 +1,17 @@
 <div style="background-color: #eaeaea; position: relative; left: -45px; width: 1025px;">
   <br />
   <div style="position: relative; left: 87px;">
-    JOB: <input type="text" /> 
-    TYPE OF WOOD: <input type="text" />
-    INSIDE EDGE: <input type="text" />
+    JOB: <%= text_field_tag 'job' %>
+    TYPE OF WOOD: <%= text_field_tag 'wood_type' %>
+    INSIDE EDGE: <%= text_field_tag 'inside_edge' %>
   </div>
   <div style="position: relative; left: 10px;">
-    OUTSIDE EDGE: <input type="text" />
+    OUTSIDE EDGE: <%= text_field_tag 'outside_edge' %>
     <div style="display: inline; position: relative; left: 3px;">
-      PANEL PROFILE: <input type="text" />
+      PANEL PROFILE: <%= text_field_tag 'panel_profile' %>
     </div>
     <div style="display: inline; position: relative; left: 21px;">
-      DATE DUE: <input type="text" />
+      DATE DUE: <%= text_field_tag 'date_due' %>
     </div>
   </div>
   <br />

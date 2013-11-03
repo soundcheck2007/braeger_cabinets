@@ -1,25 +1,25 @@
 <div style="background-color: #eaeaea; position: relative; left: -45px; width: 1025px; text-align:center">
   <br />
   <div style="position: relative; left: 10px;">
-    JOB: <input type="text" /> 
+    JOB: <%= text_field_tag 'job' %>
     <div style="display: inline; position: relative; left: 49px;">
-      TYPE OF WOOD: <input type="text" />
+      TYPE OF WOOD: <%= text_field_tag 'wood_type' %>
     </div>
   </div>
   <div style="position: relative; left: -15px;">
-    DRAWER TYPE: <input type="text" />
+    DRAWER TYPE: <%= text_field_tag 'drawer_type' %>
     <div style="display: inline; position: relative; left: 25px;">
-      TYPE OF BOTTOMS: <input type="text" />
+      TYPE OF BOTTOMS: <%= text_field_tag 'bottom_type' %>
     </div>
   </div>
   <br />
   <div>
     NOTES: 
-    <select style="width: 250px" id="bottom_selector">
+    <%= select_tag "bottom_selector", '
       <option value="1">Recess Bottom 1/2, Removeable</option>
       <option value="2">Recess Bottom 1/2, Stationary</option>
       <option value="3">Recess Bottom 1/4, Removeable</option>
       <option value="4">Recess Bottom 1/4, Stationary</option>
-    </select>
+      '.html_safe, :style => 'width: 250px' %>
   </div>
 </div>

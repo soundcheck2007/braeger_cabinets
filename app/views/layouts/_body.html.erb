@@ -1,12 +1,15 @@
 <div style="width: 1250px; position: relative; left: -150px; height: 50px;">
-  <input type="text" id="nbr" style="width: 30px; font-family: monospace; position: relative; left: 60px;" maxlength="3" />
-  <input type="text" id="qty" style="width: 30px; font-family: monospace; position: relative; left: 80px;" maxlength="3" />
-  <input type="text" id="size" style="width: 160px; font-family: monospace; position: relative; left: 95px;" maxlength="20" />
-  <select id="style_select" style="width: 200px; font-family: monospace; position: relative; left: 125px;" onChange="highlight_info(this.id);" >
-  </select>
-  <span id="style_rail_info" style="display: inline-block; font-family: monospace; position: absolute; left: 610px; border-bottom: 2px solid black;" >
-  </span>
-  <span id="panel_info" style="display: inline-block; font-family: monospace; position: absolute; left: 836px;" >
-  </span>
-  <input type="text" id="notes" style="width: 160px; font-family: monospace; position: absolute; left: 1025px;" maxlength="20" />
+  <%= text_field_tag 'nbr', nil, :style => 'width: 30px; font-family: monospace; position: relative; left: 60px;', maxlength: 3 %>
+
+  <%= text_field_tag 'qty', nil, :style => 'width: 30px; font-family: monospace; position: relative; left: 80px;', maxlength: 3 %>
+
+  <%= text_field_tag 'size', nil, :style => 'width: 160px; font-family: monospace; position: relative; left: 95px;', maxlength: 20 %>
+
+  <%= select_tag "style_select", nil, :style => "width: 200px; font-family: monospace; position: relative; left: 125px;", :onChange => "highlight_info(this.id);" %>
+
+  <%= content_tag(:span, nil, :style => "display: inline-block; font-family: monospace; position: absolute; left: 610px; border-bottom: 2px solid black;", :id => "style_rail_info") %>
+
+  <%= content_tag(:span, nil, :style => "display: inline-block; font-family: monospace; position: absolute; left: 836px;", :id => "panel_info") %>
+
+  <%= text_field_tag 'notes', nil, :style => 'width: 160px; font-family: monospace; position: absolute; left: 1025px;', maxlength: 20 %>
 </div>
