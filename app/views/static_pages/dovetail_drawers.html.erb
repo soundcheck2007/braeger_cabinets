@@ -43,6 +43,8 @@
         //bottom info is after the pipe
         $('#style_rail_info_' + i).html(parts_msg.substring(0, parts_msg.indexOf("|")));
         $('#panel_info_' + i).html(parts_msg.substring(parts_msg.indexOf("|") + 1));
+        $('#border_info_' + i).html(parts_msg.substring(0, parts_msg.indexOf("|")));
+        $('#center_info_' + i).html(parts_msg.substring(parts_msg.indexOf("|") + 1));
         $('#style_rail_info_' + i).css({"color": "black"});
         $('#panel_info_' + i).css({"color": "black"});
         //add break for 3rd line for pullout drawers

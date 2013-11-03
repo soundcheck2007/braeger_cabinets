@@ -47,6 +47,8 @@
         //panel info is after the pipe
         $('#style_rail_info_' + i).html(pnlmsg.substring(0, pnlmsg.indexOf("|")));
         $('#panel_info_' + i).html(pnlmsg.substring(pnlmsg.indexOf("|") + 1));
+        $('#border_info_' + i).html(pnlmsg.substring(0, pnlmsg.indexOf("|")));
+        $('#center_info_' + i).html(pnlmsg.substring(pnlmsg.indexOf("|") + 1));
         $('#style_rail_info_' + i).css({"color": "black"});
         $('#panel_info_' + i).css({"color": "black"});
       } else if(style == "4" || style == "5") {
