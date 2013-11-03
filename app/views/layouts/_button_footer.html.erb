@@ -6,7 +6,7 @@ Totals: <input type="text" id="txt_totals" style="width: 875px" readonly />
     <button class="btn btn-large btn-primary" type="button" onclick="add_rows();">Add Rows</button>
     <button class="btn btn-large btn-primary" type="button" onclick="calculate();">Calculate</button>
     <div style="display: inline; float: right;">
-      <button class="btn btn-large btn-primary" type="button" onclick="save();">Save</button>
+      <%= submit_tag 'Save', :onclick => 'return true', :class => 'btn btn-large btn-primary' %>
     </div>
   </div>
 </div>

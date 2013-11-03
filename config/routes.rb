@@ -1,4 +1,7 @@
 BraegerCabinets::Application.routes.draw do
+  resources :job_details
+
+
   root :to => 'static_pages#home'
   
   match '/cabinets', to: 'static_pages#cabinets'

@@ -15,13 +15,14 @@
     </div>
   </div>
 </header>
-<%= render 'layouts/job_header' %>
-<br />
-<div id="main_body">
-  <%= render 'layouts/body_header' %>
-</div>
-<%= render 'layouts/button_footer' %>
-
+<form action="/cabinets" id="cabinets_form" method="post">
+  <%= render 'layouts/job_header' %>
+  <br />
+  <div id="main_body">
+    <%= render 'layouts/body_header' %>
+  </div>
+  <%= render 'layouts/button_footer' %>
+</form>
 <script>
   
   function add_options(){
