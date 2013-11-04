@@ -8,10 +8,10 @@
   <%= select_tag "style_select", nil, :style => "width: 200px; font-family: monospace; position: relative; left: 125px;", :onChange => "highlight_info(this.id);" %>
 
   <%= content_tag(:span, nil, :style => "display: inline-block; font-family: monospace; position: absolute; left: 610px; border-bottom: 2px solid black;", :id => "style_rail_info") %>
-  <%= hidden_field_tag "border_info" %>
+  <%= hidden_field_tag "border_info", nil %>
 
   <%= content_tag(:span, nil, :style => "display: inline-block; font-family: monospace; position: absolute; left: 836px;", :id => "panel_info") %>
-  <%= hidden_field_tag "center_info" %>
+  <%= hidden_field_tag "center_info", nil %>
 
   <%= text_field_tag 'notes', nil, :style => 'width: 160px; font-family: monospace; position: absolute; left: 1025px;', maxlength: 20 %>
 </div>

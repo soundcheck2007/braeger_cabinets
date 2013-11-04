@@ -109,25 +109,35 @@
   var arr_custom_qtys = new Array();
   function add_rows(){
     for(var i = 0; i < 10; i++){
-      /*$.ajax({
-        type: "POST",
-        url: "/cabinets",
-        data: {row_id: row_count},
-        success: function() {
-          return false;
-        }
-      });*/
       $('#main_body').append("<%= escape_javascript("#{render 'layouts/body'}").html_safe %>");
       
       $('#style_select').attr('id', $('#style_select').attr('id') + "_" + row_count);
+      $('#style_select_' + row_count).attr('name', "style_select_name_" + row_count);
+
       $('#nbr').attr('id', $('#nbr').attr('id') + "_" + row_count);
+      $('#nbr_' + row_count).attr('name', "nbr_name_" + row_count);
+
       $('#qty').attr('id', $('#qty').attr('id') + "_" + row_count);
+      $('#qty_' + row_count).attr('name', "qty_name_" + row_count);
+
       $('#size').attr('id', $('#size').attr('id') + "_" + row_count);
+      $('#size_' + row_count).attr('name', "size_name_" + row_count);
+
       $('#notes').attr('id', $('#notes').attr('id') + "_" + row_count);
+      $('#notes_' + row_count).attr('name', "notes_name_" + row_count);
+
       $('#style_rail_info').attr('id', $('#style_rail_info').attr('id') + "_" + row_count);
+      $('#style_rail_info_' + row_count).attr('name', "style_rail_info_name_" + row_count);
+
       $('#border_info').attr('id', $('#border_info').attr('id') + "_" + row_count);
+      $('#border_info_' + row_count).attr('name', "border_info_name_" + row_count);
+
       $('#panel_info').attr('id', $('#panel_info').attr('id') + "_" + row_count);
+      $('#panel_info_' + row_count).attr('name', "panel_info_name_" + row_count);
+
       $('#center_info').attr('id', $('#center_info').attr('id') + "_" + row_count);
+      $('#center_info_' + row_count).attr('name', "center_info_name_" + row_count);
+
 
       add_options();
       row_count++;
