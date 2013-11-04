@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
 
   def cabinets
     if request.method == "POST"
-        Rails.logger.info "\n\n\n\n Params: #{params} \n\n\n\n\n"
+      Rails.logger.info "\n\n\n\n Params: #{params} \n\n\n\n\n"
     end
     return
   end

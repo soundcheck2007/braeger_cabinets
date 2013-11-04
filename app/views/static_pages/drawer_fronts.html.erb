@@ -16,12 +16,14 @@
     </div>
   </div>
 </header>
-<%= render 'layouts/job_header' %>
-<br />
-<div id="main_body">
-  <%= render 'layouts/drawer_front_body_header' %>
-</div>
-<%= render 'layouts/button_footer' %>
+<form action="/drawer_fronts" id="drawer_fronts_form" method="post">
+  <%= render 'layouts/job_header' %>
+  <br />
+  <div id="main_body">
+    <%= render 'layouts/drawer_front_body_header' %>
+  </div>
+  <%= render 'layouts/button_footer' %>
+</form>
 
 <script>
 
@@ -38,9 +40,15 @@
     var qty = op = style = pnlmsg = pnlinfo = "";
     arr_total = [];
     arr_denom = [];
+    $('#txt_totals').val("");
     for(var i = 0; i < row_count; i++){
       qty = $('#qty_' + i).val();
       op = $('#size_' + i).val();
+      if(qty == "" && op == "") {
+        $('#style_rail_info_' + i).html("");
+        $('#panel_info_' + i).html("");
+        $('#notes_' + i).parent().height(50);
+      }
       style = $('#style_select_' + i).val();
       if (!(style == "4" || style == "5" || qty == 0 || op == "")  && op.match(/x/g).length == 1){
         pnlmsg = get_panel_fronts(qty, op.toUpperCase(), style);
