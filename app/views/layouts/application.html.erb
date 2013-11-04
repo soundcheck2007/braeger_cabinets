@@ -107,10 +107,18 @@
   var arr_custom_total = new Array();
   var arr_custom_ids = new Array();
   var arr_custom_qtys = new Array();
-  
   function add_rows(){
     for(var i = 0; i < 10; i++){
+      /*$.ajax({
+        type: "POST",
+        url: "/cabinets",
+        data: {row_id: row_count},
+        success: function() {
+          return false;
+        }
+      });*/
       $('#main_body').append("<%= escape_javascript("#{render 'layouts/body'}").html_safe %>");
+      
       $('#style_select').attr('id', $('#style_select').attr('id') + "_" + row_count);
       $('#nbr').attr('id', $('#nbr').attr('id') + "_" + row_count);
       $('#qty').attr('id', $('#qty').attr('id') + "_" + row_count);
