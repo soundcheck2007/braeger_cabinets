@@ -344,6 +344,7 @@
     var custom_panel_height_one = custom_panel_height_two = custom_panel_width_one = custom_panel_width_two = custom_panel_height = custom_panel_width = 0;
     var split_one = split_two = denom_one = denom_two = 0;
     var split = false;
+    var notes_txt = "Regular Custom";
     
     stile_height = height;
     stile_width = parseFloat($('#custom_stile').val());
@@ -358,10 +359,12 @@
         top_rail_height = width - (stile_width * 2) + 1.25;
         bottom_rail_height = top_rail_height;
         panel_msg = "&nbsp;&nbsp;&nbsp;&nbsp;Glass";
+        notes_txt = "Glass Custom";
         break;
       case "2":
         split = true;
         split_one = parseFloat($('#custom_horizontal').val());
+        notes_txt = "Horizontal Split Custom";
         if(split_one > 10){
           split_two = 100 - split_one;
           denom_one = split_one / 100;
@@ -395,6 +398,7 @@
         split = true;
         split_one = parseFloat($('#custom_vertical').val());
         center_rail_height = height - (bottom_rail_width + top_rail_width) + 1;
+        notes_txt = "Vertical Split Custom";
         if(split_one > 10){
           split_two = 100 - split_one;
           denom_one = split_one / 100;
@@ -405,7 +409,7 @@
           custom_panel_width_two = Math.round(custom_panel_width_two * 1000) / 1000;
           custom_panel_width_one += .625;
           custom_panel_width_two += .625
-          custom_panel_height = height - (top_rail_width + bottom_rail_width) - .375;
+          custom_panel_height = height - (top_rail_width + bottom_rail_width) - .375 + 1;
           msg_four = "<br />" + qty + " - " + center_rail_height + " X " + center_rail_width + " C.R.";
           panel_msg = qty + " - " + custom_panel_width_one.toFixed(4) + " X " + custom_panel_height + "<br />";
           panel_msg += qty + " - " + custom_panel_width_two + " X " + custom_panel_height;
@@ -414,7 +418,7 @@
           custom_panel_width = custom_panel_width / (split_one + 1);
           custom_panel_width = Math.round(custom_panel_width * 1000) / 1000;
           custom_panel_width += .625;
-          custom_panel_height = height - (top_rail_width + bottom_rail_width) - .375;
+          custom_panel_height = height - (top_rail_width + bottom_rail_width) - .375 + 1;
           msg_four = "<br />" + (qty * parseInt(split_one)) + " - " + center_rail_height + " X " + center_rail_width + " C.R.";
           panel_msg = (split_one + 1) + " - " + custom_panel_width + " X " + custom_panel_height;
         }
@@ -449,7 +453,7 @@
     } else {
       $('#notes_' + id).parent().height(70);
     }
-
+    $('#notes_' + id).val(notes_txt);
     calculate();
   }
   

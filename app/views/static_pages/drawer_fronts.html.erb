@@ -47,7 +47,10 @@
       if(qty == "" && op == "") {
         $('#style_rail_info_' + i).html("");
         $('#panel_info_' + i).html("");
+        $('#border_info_' + i).val("");
+        $('#center_info_' + i).val("");
         $('#notes_' + i).parent().height(50);
+        $('#notes_' + i).val("");
       }
       style = $('#style_select_' + i).val();
       if (!(style == "4" || style == "5" || qty == 0 || op == "")  && op.match(/x/g).length == 1){
