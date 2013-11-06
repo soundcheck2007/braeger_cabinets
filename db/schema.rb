@@ -11,6 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20131106040736) do
+
+  create_table "job_details", :force => true do |t|
+    t.integer  "job_id"
+    t.integer  "door_no"
+    t.integer  "door_qty"
+    t.string   "door_size"
+    t.string   "door_style"
+    t.string   "style_rail_info"
+    t.string   "panel_info"
+    t.string   "notes"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "job_headers", :force => true do |t|
+    t.string   "job"
+    t.string   "wood_type"
+    t.string   "inside_edge"
+    t.string   "outside_edge"
+    t.string   "panel_profile"
+    t.date     "date_due"
+    t.string   "drawer_type"
+    t.string   "bottom_type"
+    t.string   "bottom_notes"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
 end
