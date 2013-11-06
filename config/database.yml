@@ -6,10 +6,11 @@
 development:
   adapter: postgresql
   database: braeger_dev
+  host: localhost
   pool: 5
   timeout: 5000
   username: braeger
-  password:
+  password: braeger
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -19,7 +20,7 @@ test:
   database: braeger_test
   timeout: 5000
   username: braeger
-  password:
+  password: braeger
 
 production:
   adapter: postgresql
@@ -27,4 +28,4 @@ production:
   pool: 5
   timeout: 5000
   username: braeger
-  password:
+  password: braeger
