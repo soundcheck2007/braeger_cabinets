@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131106040736) do
+ActiveRecord::Schema.define(:version => 20131107022912) do
 
   create_table "job_details", :force => true do |t|
     t.integer  "job_id"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20131106040736) do
     t.string   "bottom_notes"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "totals"
   end
 
 end
