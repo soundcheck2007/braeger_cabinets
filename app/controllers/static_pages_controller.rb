@@ -5,6 +5,13 @@ class StaticPagesController < ApplicationController
   def cabinets
     if request.method == "POST"
       create_job_info(params)
+      respond_to do |format|
+        if @new_job.save && @new_detail.save
+          format.html {}
+          format.js {}
+          format.json { render :json => @new_job }
+        end
+      end
     end
     return
   end
@@ -12,6 +19,13 @@ class StaticPagesController < ApplicationController
   def drawer_fronts
     if request.method == "POST"
       create_job_info(params)
+      respond_to do |format|
+        if @new_job.save && @new_detail.save
+          format.html {}
+          format.js {}
+          format.json { render :nothing => true }
+        end
+      end
     end
     return
   end
@@ -19,11 +33,18 @@ class StaticPagesController < ApplicationController
   def dovetail_drawers
     if request.method == "POST"
       create_job_info(params)
+      respond_to do |format|
+        if @new_job.save && @new_detail.save
+          format.html {}
+          format.js {}
+          format.json { render :nothing => true }
+        end
+      end
     end
     return
   end
 
-  def create_job_info(params)
+  def create_job_info(params) 
     job_header = params
     job = job_header[:job]
     wood_type = job_header[:wood_type]
@@ -38,18 +59,24 @@ class StaticPagesController < ApplicationController
     #get total of rows then subtract 1 so that we can start from 0
     row_tally = job_header[:row_tally].to_i - 1
 
-    new_job = JobHeader.create(:job => job) do |j|
-      j.wood_type = wood_type
-      j.inside_edge = inside_edge
-      j.outside_edge = outside_edge
-      j.panel_profile = panel_profile
-      j.date_due = date_due
-      j.drawer_type = drawer_type
-      j.bottom_type = bottom_type
-      j.bottom_notes = bottom_notes
-      j.totals = totals
+    if params[:created_job].to_i > 0
+      @new_job = JobHeader.find(params[:created_job].to_i)
+      @new_job.update_attributes(:job => job, :wood_type => wood_type, :inside_edge => inside_edge, :outside_edge => outside_edge, :panel_profile => panel_profile, :date_due => date_due, :drawer_type => drawer_type, :bottom_type => bottom_type, :bottom_notes => bottom_notes, :totals => totals)
+      JobDetail.destroy_all(:job_id => params[:created_job].to_i)
+    else
+      @new_job = JobHeader.create(:job => job) do |j|
+        j.wood_type = wood_type
+        j.inside_edge = inside_edge
+        j.outside_edge = outside_edge
+        j.panel_profile = panel_profile
+        j.date_due = date_due
+        j.drawer_type = drawer_type
+        j.bottom_type = bottom_type
+        j.bottom_notes = bottom_notes
+        j.totals = totals
+      end
     end
-    new_job.save
+    @new_job.save
 
     job_details = job_header.except(:job, :wood_type, :inside_edge, :outside_edge, :panel_profile, :date_due, :drawer_type, :bottom_type, :bottom_notes, :row_tally, :txt_totals)
     
@@ -75,7 +102,7 @@ class StaticPagesController < ApplicationController
         next
       end
 
-      JobDetail.create(:job_id => new_job.id) do |d|
+      @new_detail = JobDetail.create(:job_id => @new_job.id) do |d|
         d.door_no = door_no
         d.door_qty = door_qty
         d.door_size = door_size

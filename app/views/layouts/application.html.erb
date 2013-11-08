@@ -531,6 +531,20 @@
     $('#custom_screen').popup();
   });
   
+  $('form').submit(function() {  
+    var valuesToSubmit = $(this).serialize();
+    $.ajax({
+        type: "POST",
+        url: $(this).attr('action'), //submits it to the given url of the form
+        data: valuesToSubmit,
+        dataType: "JSON" 
+    }).success(function(data){
+        alert("Saved!");
+        $('#created_job').val(data.id);
+    });
+    return false; // prevents normal behaviour
+  });
+
   $(document).ready(function() {
     add_rows();
   });
