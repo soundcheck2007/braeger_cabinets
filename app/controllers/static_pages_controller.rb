@@ -23,7 +23,7 @@ class StaticPagesController < ApplicationController
         if @new_job.save && @new_detail.save
           format.html {}
           format.js {}
-          format.json { render :nothing => true }
+          format.json { render :json => @new_job }
         end
       end
     end
@@ -37,7 +37,7 @@ class StaticPagesController < ApplicationController
         if @new_job.save && @new_detail.save
           format.html {}
           format.js {}
-          format.json { render :nothing => true }
+          format.json { render :json => @new_job }
         end
       end
     end
