@@ -14,3 +14,4 @@
 //= require jquery_ujs
 //= require_tree .
 //= require popup_overlay
+//= require jquery.ui.datepicker

@@ -44,6 +44,28 @@ class StaticPagesController < ApplicationController
     return
   end
 
+  def search
+    if request.method == "GET" && !params[:jobs].nil?
+      date_from = params[:date_from]
+      date_to = params[:date_to]
+      if date_from.empty? && date_to.empty?
+        @andy = JobHeader.where( "job = ?", params[:jobs] )
+      else
+        @andy = JobHeader.where( "job = ? AND date_due > ? AND date_due < ?", params[:jobs], date_from, date_to )
+      end
+      respond_to do |format|
+        format.html {}
+        format.js {}
+        format.json { render :json => @andy }
+      end
+    else
+      @jobs_list = JobHeader.all(:select => :job).collect { |j| j.job }
+      @jobs_list = @jobs_list.uniq
+    end
+    return
+  end
+
+
   def create_job_info(params) 
     job_header = params
     job = job_header[:job]

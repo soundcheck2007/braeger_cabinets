@@ -533,14 +533,33 @@
   
   $('form').submit(function() {  
     var valuesToSubmit = $(this).serialize();
+    var post_type = "POST";
+    var call_id = $(this).attr('id');
+    if(call_id == "search_form") { post_type = "GET"; }
     $.ajax({
-        type: "POST",
+        type: post_type,
         url: $(this).attr('action'), //submits it to the given url of the form
         data: valuesToSubmit,
         dataType: "JSON" 
     }).success(function(data){
-        alert("Saved!");
-        $('#created_job').val(data.id);
+      //this is when we search
+      if(call_id == "search_form") {
+        alert(data);
+        return true;
+      }
+
+      //This is when we save
+      alert("Saved!");
+      $('#created_job').val(data.id);
+    }).error(function(data) {
+      //This is when we search
+      if(call_id == "search_form") {
+        alert("Search was unable to be performed");
+        return false;
+      }
+
+      //this is when we save
+      alert("Save not performed");
     });
     return false; // prevents normal behaviour
   });

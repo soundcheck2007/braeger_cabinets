@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+  <title>Braeger Woodworking Inc. | Home</title>
+</head>
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "Braeger Woodworking", root_path, id: "logo" %>
+      <nav>
+        <ul class="nav pull-right">
+          <li><%= link_to "Home", root_path %></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+<div class="center hero-unit">
+  <h1 id="welcome">Welcome to Search</h1>
+  <h2>
+    Please select your search options below
+  </h2>
+  <div></div>
+  <div>
+    <form action="/search" id="search_form" method="get">
+      <%= label_tag 'job_label', 'Job:', class: 'search_label' %>
+      <%= select_tag 'jobs', options_for_select(@jobs_list), class: 'search_select' %> 
+      <br />
+      <%= label_tag 'date_range_label', 'Date Range:', class: 'search_label' %>
+      <%= label_tag 'date_from_label', 'From:', class: 'search_label_date' %>
+      <%= text_field_tag 'date_from', nil, class: "datepicker" %>
+      <%= label_tag 'date_to_label', "To:", class: 'search_label_date' %>
+      <%= text_field_tag 'date_to', nil, class: "datepicker" %>
+      <br /><br />
+      <%= submit_tag "Search", :onclick => 'return true;', :class => 'btn btn-large btn-primary' %>
+    </form>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $('.datepicker').datepicker();
+  });
+
+  function add_options(){}
+</script>

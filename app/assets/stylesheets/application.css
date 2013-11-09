@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require_tree .
+ *= require jquery.ui.datepicker
  */
 
 .popup_background {
@@ -23,6 +24,23 @@
 .popup_content {
   *display: inline;
   *zoom: 1;
+}
+
+.search_label {
+  display:       inline;
+  padding-right: 10px;
+  font-size:     20px;
+  font-weight:   bold;
+}
+
+.search_label_date {
+  display:       inline;
+  padding-right: 10px;
+  font-size:     15px;
+}
+
+.search_select {
+  display: inline;
 }
 
 /* styling for custom split screen */
