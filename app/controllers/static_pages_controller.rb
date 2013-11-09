@@ -6,7 +6,7 @@ class StaticPagesController < ApplicationController
     if request.method == "POST"
       create_job_info(params)
       respond_to do |format|
-        if @new_job.save && @new_detail.save
+        if @new_job.save
           format.html {}
           format.js {}
           format.json { render :json => @new_job }
@@ -20,7 +20,7 @@ class StaticPagesController < ApplicationController
     if request.method == "POST"
       create_job_info(params)
       respond_to do |format|
-        if @new_job.save && @new_detail.save
+        if @new_job.save
           format.html {}
           format.js {}
           format.json { render :json => @new_job }
@@ -34,7 +34,7 @@ class StaticPagesController < ApplicationController
     if request.method == "POST"
       create_job_info(params)
       respond_to do |format|
-        if @new_job.save && @new_detail.save
+        if @new_job.save
           format.html {}
           format.js {}
           format.json { render :json => @new_job }
@@ -48,18 +48,43 @@ class StaticPagesController < ApplicationController
     if request.method == "GET" && !params[:jobs].nil?
       date_from = params[:date_from]
       date_to = params[:date_to]
+      job_name = params[:jobs]
       if date_from.empty? && date_to.empty?
-        @andy = JobHeader.where( "job = ?", params[:jobs] )
+        if job_name == "All"
+          @jobs = JobHeader.find(:all, :order => "job ASC" )
+        else
+          @jobs = JobHeader.where( "job = ?", job_name )
+        end
+      elsif date_from.empty? && !date_to.empty?
+        date_to = Date.strptime(date_to, "%m/%d/%Y")
+        if job_name == "All"
+          @jobs = JobHeader.where( "date_due < ?", date_to )
+        else
+          @jobs = JobHeader.where( "job = ? AND date_due < ?", params[:jobs], date_to )
+        end
+      elsif !date_from.empty? && date_to.empty?
+        date_from = Date.strptime(date_from, "%m/%d/%Y")
+        if job_name == "All"
+          @jobs = JobHeader.where( "date_due > ?", date_from )
+        else
+          @jobs = JobHeader.where( "job = ? AND date_due > ?", params[:jobs], date_from )
+        end
       else
-        @andy = JobHeader.where( "job = ? AND date_due > ? AND date_due < ?", params[:jobs], date_from, date_to )
+        date_from = Date.strptime(date_from, "%m/%d/%Y")
+        date_to = Date.strptime(date_to, "%m/%d/%Y")
+        if job_name == "All"
+          @jobs = JobHeader.where( "date_due > ? AND date_due < ?", date_from, date_to )
+        else
+          @jobs = JobHeader.where( "job = ? AND date_due > ? AND date_due < ?", params[:jobs], date_from, date_to )
+        end
       end
       respond_to do |format|
         format.html {}
         format.js {}
-        format.json { render :json => @andy }
+        format.json { render :json => @jobs }
       end
     else
-      @jobs_list = JobHeader.all(:select => :job).collect { |j| j.job }
+      @jobs_list = JobHeader.all(:select => :job, :order => 'job ASC').collect { |j| j.job }
       @jobs_list = @jobs_list.uniq
     end
     return
@@ -73,7 +98,7 @@ class StaticPagesController < ApplicationController
     inside_edge = job_header[:inside_edge]
     outside_edge = job_header[:outside_edge]
     panel_profile = job_header[:panel_profile]
-    date_due = job_header[:date_due]
+    date_due = job_header[:date_due].empty? ? "" : Date.strptime(job_header[:date_due], "%m/%d/%Y")
     drawer_type = job_header[:drawer_type]
     bottom_type = job_header[:bottom_type]
     bottom_notes = job_header[:bottom_notes]

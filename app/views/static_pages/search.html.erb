@@ -23,23 +23,33 @@
   <div>
     <form action="/search" id="search_form" method="get">
       <%= label_tag 'job_label', 'Job:', class: 'search_label' %>
-      <%= select_tag 'jobs', options_for_select(@jobs_list), class: 'search_select' %> 
+      <%= select_tag 'jobs', ("<option></option><option>All</option>"  + options_for_select(@jobs_list)).html_safe, class: 'search_select' %> 
       <br />
       <%= label_tag 'date_range_label', 'Date Range:', class: 'search_label' %>
       <%= label_tag 'date_from_label', 'From:', class: 'search_label_date' %>
       <%= text_field_tag 'date_from', nil, class: "datepicker" %>
       <%= label_tag 'date_to_label', "To:", class: 'search_label_date' %>
       <%= text_field_tag 'date_to', nil, class: "datepicker" %>
+      <br />
+      <%= submit_tag "Search", :onclick => 'return check_blank();', :class => 'btn btn-large btn-primary' %>
       <br /><br />
-      <%= submit_tag "Search", :onclick => 'return true;', :class => 'btn btn-large btn-primary' %>
+      <div>
+        <%= select_tag 'found_jobs', nil, { :multiple => :true, :disabled => 'disabled', :size => '8' } %>
+        <%= select_tag 'found_jobs_info', nil, { :multiple => :true, :disabled => 'disabled', :size => '8' } %>
+        <br />
+        <%= submit_tag "Open Job", { :id => "open_job_button", :onclick => 'return false;', :class => 'btn btn-large btn-primary', :disabled => 'disabled' } %>
+      </div>
     </form>
   </div>
 </div>
 
 <script>
-  $(function() {
-    $('.datepicker').datepicker();
-  });
-
   function add_options(){}
+  function check_blank(){
+    if($('#jobs').val() == "") {
+      alert("Must select a job.");
+      return false;
+    }
+    return true;
+  }
 </script>

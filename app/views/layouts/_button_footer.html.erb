@@ -6,7 +6,7 @@ Totals: <%= text_field_tag "txt_totals", nil,:style => "width: 875px", readonly:
     <button class="btn btn-large btn-primary" type="button" onclick="add_rows();">Add Rows</button>
     <button class="btn btn-large btn-primary" type="button" onclick="calculate();">Calculate</button>
     <div style="display: inline; float: right;">
-      <%= submit_tag 'Save', :onclick => 'return true;', :class => 'btn btn-large btn-primary' %>
+      <%= submit_tag 'Save', :onclick => 'return check_values();', :class => 'btn btn-large btn-primary' %>
     </div>
   </div>
   <%= hidden_field_tag "row_tally", 0 %>

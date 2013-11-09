@@ -107,6 +107,7 @@
   var arr_custom_total = new Array();
   var arr_custom_ids = new Array();
   var arr_custom_qtys = new Array();
+  var arr_job_info = new Array();
   function add_rows(){
     for(var i = 0; i < 10; i++){
       $('#main_body').append("<%= escape_javascript("#{render 'layouts/body'}").html_safe %>");
@@ -527,6 +528,31 @@
     alert("saving");
   }
 
+  function check_values(){
+    if($.trim($('#job').val().toUpperCase()) == "ALL"){
+      alert("Cannot have a job named: 'All' ");
+      return false;
+    }
+    if($.trim($('#job').val()) == "" || $('#date_due').val() == ""){
+      if(confirm("Having a blank Job Name or Due Date may affect search results. Continue?")){
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function populate_info(i) {
+    $('#found_jobs_info').empty();
+    var arr_temp = arr_job_info[i].split(",");
+    for (var j = 0; j < arr_temp.length; j++) {
+      if(arr_temp[j] != "null" && arr_temp[j] != "") {
+        $('#found_jobs_info').append("<option>" + arr_temp[j] + "</option>");
+      }
+    }
+  }
+
   $(function() {
     $('#custom_screen').popup();
   });
@@ -544,8 +570,22 @@
     }).success(function(data){
       //this is when we search
       if(call_id == "search_form") {
-        alert(data);
-        return true;
+        var info_string = "";
+        //Populate select list with values
+        $('#open_job_button').removeAttr('disabled');
+        $('#found_jobs').removeAttr('disabled');
+        $('#found_jobs').empty();
+        $('#found_jobs_info').empty();
+        arr_job_info = [];
+        for(var i = 0; i < data.length; i++){
+          $('#found_jobs').append("<option id='job_id_" + data[i].id + "' onClick='populate_info(" + i + ")'>" + data[i].job + "</option>");
+          info_string = data[i].wood_type + "," + data[i].inside_edge + "," 
+                      + data[i].outside_edge + "," + data[i].panel_profile + "," 
+                      + data[i].date_due + "," + data[i].drawer_type + "," 
+                      + data[i].bottom_type + "," + data[i].bottom_notes;
+          arr_job_info.push(info_string);
+        }
+        return false;
       }
 
       //This is when we save
@@ -562,6 +602,10 @@
       alert("Save not performed");
     });
     return false; // prevents normal behaviour
+  });
+
+  $(function() {
+    $('.datepicker').datepicker();
   });
 
   $(document).ready(function() {
