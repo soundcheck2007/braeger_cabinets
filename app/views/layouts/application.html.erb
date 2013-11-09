@@ -13,6 +13,9 @@
       <%= yield %>
       <%= render 'layouts/footer' %>
     </div>
+    <div id="please_wait" class="custom" style="display: none">
+      <span>Please Wait...</span>
+    </div>
     <% if ! (content_for :title).include?("Drawer") %>
       <div id="custom_screen" class="custom">
         <table>
@@ -554,14 +557,20 @@
   }
 
   $(function() {
+    //add any divs here for popup overlay magic
     $('#custom_screen').popup();
+    $('#please_wait').popup();
   });
   
   $('form').submit(function() {  
     var valuesToSubmit = $(this).serialize();
     var post_type = "POST";
     var call_id = $(this).attr('id');
-    if(call_id == "search_form") { post_type = "GET"; }
+    if(call_id == "search_form") { 
+      post_type = "GET"; 
+      $('#please_wait_wrapper').fadeIn();
+    }
+
     $.ajax({
         type: post_type,
         url: $(this).attr('action'), //submits it to the given url of the form
@@ -577,6 +586,10 @@
         $('#found_jobs').empty();
         $('#found_jobs_info').empty();
         arr_job_info = [];
+        if (data.length == 0){
+          $('#found_jobs').append("<option>No results found.</option>");
+        }
+
         for(var i = 0; i < data.length; i++){
           $('#found_jobs').append("<option id='job_id_" + data[i].id + "' onClick='populate_info(" + i + ")'>" + data[i].job + "</option>");
           info_string = data[i].wood_type + "," + data[i].inside_edge + "," 
@@ -585,6 +598,7 @@
                       + data[i].bottom_type + "," + data[i].bottom_notes;
           arr_job_info.push(info_string);
         }
+        $('#please_wait_wrapper').fadeOut();
         return false;
       }
 

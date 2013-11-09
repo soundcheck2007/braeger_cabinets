@@ -58,24 +58,24 @@ class StaticPagesController < ApplicationController
       elsif date_from.empty? && !date_to.empty?
         date_to = Date.strptime(date_to, "%m/%d/%Y")
         if job_name == "All"
-          @jobs = JobHeader.where( "date_due < ?", date_to )
+          @jobs = JobHeader.where( "date_due <= ?", date_to )
         else
-          @jobs = JobHeader.where( "job = ? AND date_due < ?", params[:jobs], date_to )
+          @jobs = JobHeader.where( "job = ? AND date_due <= ?", params[:jobs], date_to )
         end
       elsif !date_from.empty? && date_to.empty?
         date_from = Date.strptime(date_from, "%m/%d/%Y")
         if job_name == "All"
-          @jobs = JobHeader.where( "date_due > ?", date_from )
+          @jobs = JobHeader.where( "date_due >= ?", date_from )
         else
-          @jobs = JobHeader.where( "job = ? AND date_due > ?", params[:jobs], date_from )
+          @jobs = JobHeader.where( "job = ? AND date_due >= ?", params[:jobs], date_from )
         end
       else
         date_from = Date.strptime(date_from, "%m/%d/%Y")
         date_to = Date.strptime(date_to, "%m/%d/%Y")
         if job_name == "All"
-          @jobs = JobHeader.where( "date_due > ? AND date_due < ?", date_from, date_to )
+          @jobs = JobHeader.where( "date_due >= ? AND date_due <= ?", date_from, date_to )
         else
-          @jobs = JobHeader.where( "job = ? AND date_due > ? AND date_due < ?", params[:jobs], date_from, date_to )
+          @jobs = JobHeader.where( "job = ? AND date_due >= ? AND date_due <= ?", params[:jobs], date_from, date_to )
         end
       end
       respond_to do |format|
