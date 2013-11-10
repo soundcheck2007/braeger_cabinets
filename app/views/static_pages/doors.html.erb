@@ -112,16 +112,19 @@
           if (job_info[i].door_style == 2) {
             var custom_info = job_info[i].style_rail_info.split("<br />");
             var height = width = 0;
+            //add stiles to custom totals
             height = parseFloat(custom_info[0].substring(custom_info[0].indexOf("-") + 1, custom_info[0].indexOf("X") - 1));
             width = parseFloat(custom_info[0].substring(custom_info[0].indexOf("X") + 1, custom_info[0].indexOf("S") - 1));
             add_custom_values(i.toString(), job_info[i].door_qty * 2, height, width);
 
+            //add heights to custom totals
             height = parseFloat(custom_info[1].substring(custom_info[1].indexOf("-") + 1, custom_info[1].indexOf("X") - 1));
-            width = parseFloat(custom_info[1].substring(custom_info[1].indexOf("X") + 1, custom_info[1].indexOf("S") - 1));
+            width = parseFloat(custom_info[1].substring(custom_info[1].indexOf("X") + 1, custom_info[1].indexOf("T") - 1));
             add_custom_values(i.toString(), job_info[i].door_qty, height, width);
 
+            //add widths to custom totals
             height = parseFloat(custom_info[2].substring(custom_info[2].indexOf("-") + 1, custom_info[2].indexOf("X") - 1));
-            width = parseFloat(custom_info[2].substring(custom_info[2].indexOf("X") + 1, custom_info[2].indexOf("S") - 1));
+            width = parseFloat(custom_info[2].substring(custom_info[2].indexOf("X") + 1, custom_info[2].indexOf("B") - 1));
             add_custom_values(i.toString(), job_info[i].door_qty, height, width);
           }
         }
