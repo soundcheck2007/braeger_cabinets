@@ -2,7 +2,7 @@
   <% @job_header = {:id => 0, :job => "", :wood_type => "", :inside_edge => "", :outside_edge => "", :panel_profile => "", :totals => "" } %>
   <% date_due = "" %>
 <% else %>
-  <% date_due = @job_header[:date_due].strftime('%m/%d/%Y') %>
+  <% date_due = @job_header[:date_due].nil? ? "" : @job_header[:date_due].strftime('%m/%d/%Y') %>
 <% end %>
 <div style="background-color: #eaeaea; position: relative; left: -45px; width: 1025px;">
   <br />

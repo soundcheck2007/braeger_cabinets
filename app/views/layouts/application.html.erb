@@ -500,10 +500,12 @@
     var pos = jQuery.inArray(id.toString(), arr_custom_ids);
     if (pos > -1){
       for(var i = 0; i < arr_custom_ids.length; i++) {
-        arr_custom_ids[i] = -1;
-        arr_custom_total[i] = -1;
-        arr_custom_qtys[i] = -1;
-        arr_custom_denom[i] = -1;
+        if(arr_custom_ids[i] == id.toString()){
+          arr_custom_ids[i] = -1;
+          arr_custom_total[i] = -1;
+          arr_custom_qtys[i] = -1;
+          arr_custom_denom[i] = -1;
+        }
       }
     }
   }
