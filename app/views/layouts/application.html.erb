@@ -450,7 +450,9 @@
     }
     
     $('#style_rail_info_' + id).html(msg_full);
+    $('#border_info_' + id).val(msg_full);
     $('#panel_info_' + id).html(panel_msg);
+    $('#center_info_' + id).val(panel_msg);
     $('#style_rail_info_' + id).css({"color": "black"});
     $('#panel_info_' + id).css({"color": "black"});
     if(split){
@@ -556,66 +558,86 @@
     }
   }
 
-  $(function() {
-    //add any divs here for popup overlay magic
-    $('#custom_screen').popup();
-    $('#please_wait').popup();
-  });
-  
-  $('form').submit(function() {  
-    var valuesToSubmit = $(this).serialize();
-    var post_type = "POST";
-    var call_id = $(this).attr('id');
-    if(call_id == "search_form") { 
-      post_type = "GET"; 
-      $('#please_wait_wrapper').fadeIn();
-    }
-
+  function search_form_ajax(valuesToSubmit, action){
+    $('#please_wait_wrapper').fadeIn();
     $.ajax({
-        type: post_type,
-        url: $(this).attr('action'), //submits it to the given url of the form
+        type: "GET",
+        url: action, //submits it to the given url of the form
         data: valuesToSubmit,
         dataType: "JSON" 
     }).success(function(data){
-      //this is when we search
-      if(call_id == "search_form") {
-        var info_string = "";
-        //Populate select list with values
+      var info_string = "";
+      //Populate select list with values
+      $('#found_jobs').empty();
+      $('#found_jobs_info').empty();
+      arr_job_info = [];
+      if (data.length == 0){
+        $('#found_jobs').append("<option>No results found.</option>");
+        $('#open_job_button').attr('disabled', 'disabled');
+        $('#found_jobs').attr('disabled', 'disabled');
+      } else {
         $('#open_job_button').removeAttr('disabled');
         $('#found_jobs').removeAttr('disabled');
-        $('#found_jobs').empty();
-        $('#found_jobs_info').empty();
-        arr_job_info = [];
-        if (data.length == 0){
-          $('#found_jobs').append("<option>No results found.</option>");
-        }
-
-        for(var i = 0; i < data.length; i++){
-          $('#found_jobs').append("<option id='job_id_" + data[i].id + "' onClick='populate_info(" + i + ")'>" + data[i].job + "</option>");
-          info_string = data[i].wood_type + "," + data[i].inside_edge + "," 
-                      + data[i].outside_edge + "," + data[i].panel_profile + "," 
-                      + data[i].date_due + "," + data[i].drawer_type + "," 
-                      + data[i].bottom_type + "," + data[i].bottom_notes;
-          arr_job_info.push(info_string);
-        }
-        $('#please_wait_wrapper').fadeOut();
-        return false;
       }
 
+      for(var i = 0; i < data.length; i++){
+        $('#found_jobs').append("<option id='job_id_" + data[i].id + "' onClick='populate_info(" + i + ")'>" + data[i].job + "</option>");
+        $('body').append("<input type='hidden' id='project_" + data[i].id + "' value='" + data[i].project + "' />");
+        info_string = data[i].wood_type + "," + data[i].inside_edge + "," 
+                    + data[i].outside_edge + "," + data[i].panel_profile + "," 
+                    + data[i].date_due + "," + data[i].drawer_type + "," 
+                    + data[i].bottom_type + "," + data[i].pretty_bottom_notes + ",Job Type: " + data[i].project_type;
+        arr_job_info.push(info_string);
+      }
+      $('#please_wait_wrapper').fadeOut();
+      return false;
+    }).error(function(data) {
+      alert("Search was unable to be performed");
+      return false;
+    });
+  }
+
+  function save_form_ajax(valuesToSubmit, action){
+    $.ajax({
+        type: "POST",
+        url: action, //submits it to the given url of the form
+        data: valuesToSubmit,
+        dataType: "JSON" 
+    }).success(function(data){
       //This is when we save
       alert("Saved!");
       $('#created_job').val(data.id);
     }).error(function(data) {
-      //This is when we search
-      if(call_id == "search_form") {
-        alert("Search was unable to be performed");
-        return false;
-      }
-
       //this is when we save
       alert("Save not performed");
     });
+  }
+  
+  function open_job_ajax(valuesToSubmit){
+    var job_to_open = $('#found_jobs').find('option:selected').attr('id');
+    job_to_open = job_to_open.substring(job_to_open.lastIndexOf("_") + 1);
+    var job_project = $('#project_' + job_to_open).val();
+    window.location = "/" + job_project + "?open_job=" + job_to_open;
+  }
+
+  $('form').submit(function() {  
+    var valuesToSubmit = $(this).serialize();
+    var call_id = $(this).attr('id');
+    var action = $(this).attr('action');
+    if(call_id == "search_form") { 
+      search_form_ajax(valuesToSubmit, action);
+    } else if(call_id == "open_job_form") {
+      open_job_ajax(valuesToSubmit);
+    } else {
+      save_form_ajax(valuesToSubmit, action);
+    }
     return false; // prevents normal behaviour
+  });
+
+  $(function() {
+    //add any divs here for popup overlay magic
+    $('#custom_screen').popup();
+    $('#please_wait').popup();
   });
 
   $(function() {
@@ -624,5 +646,6 @@
 
   $(document).ready(function() {
     add_rows();
+    open_job_check();
   });
 </script>

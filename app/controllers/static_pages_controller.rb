@@ -2,7 +2,7 @@ class StaticPagesController < ApplicationController
   def home
   end
 
-  def cabinets
+  def doors
     if request.method == "POST"
       create_job_info(params)
       respond_to do |format|
@@ -12,6 +12,10 @@ class StaticPagesController < ApplicationController
           format.json { render :json => @new_job }
         end
       end
+    end
+    if !params[:open_job].nil?
+      @job_header = JobHeader.find(params[:open_job])
+      @job_details = JobDetail.find(:all, :conditions => { :job_id => @job_header.id })
     end
     return
   end
@@ -27,6 +31,10 @@ class StaticPagesController < ApplicationController
         end
       end
     end
+    if !params[:open_job].nil?
+      @job_header = JobHeader.find(params[:open_job])
+      @job_details = JobDetail.find(:all, :conditions => { :job_id => @job_header.id })
+    end
     return
   end
 
@@ -40,6 +48,10 @@ class StaticPagesController < ApplicationController
           format.json { render :json => @new_job }
         end
       end
+    end
+    if !params[:open_job].nil?
+      @job_header = JobHeader.find(params[:open_job])
+      @job_details = JobDetail.find(:all, :conditions => { :job_id => @job_header.id })
     end
     return
   end
@@ -78,6 +90,20 @@ class StaticPagesController < ApplicationController
           @jobs = JobHeader.where( "job = ? AND date_due >= ? AND date_due <= ?", params[:jobs], date_from, date_to )
         end
       end
+      @jobs.each do |j|
+        j[:project_type] = j[:project].titleize
+        if j.bottom_notes == "1"
+          j[:pretty_bottom_notes] = "Recess Bottom 1/2, Removeable"
+        elsif j.bottom_notes == "2"
+          j[:pretty_bottom_notes] = "Recess Bottom 1/2, Stationary"
+        elsif j.bottom_notes == "3"
+          j[:pretty_bottom_notes] = "Recess Bottom 1/4, Removeable"
+        elsif j.bottom_notes == "4"
+          j[:pretty_bottom_notes] = "Recess Bottom 1/4, Stationary"
+        else
+          j[:pretty_bottom_notes] = ""
+        end
+      end
       respond_to do |format|
         format.html {}
         format.js {}
@@ -98,20 +124,26 @@ class StaticPagesController < ApplicationController
     inside_edge = job_header[:inside_edge]
     outside_edge = job_header[:outside_edge]
     panel_profile = job_header[:panel_profile]
-    date_due = job_header[:date_due].empty? ? "" : Date.strptime(job_header[:date_due], "%m/%d/%Y")
+    if job_header[:date_due].nil?
+      date_due = ""
+    else
+      date_due = job_header[:date_due].empty? ? "" : Date.strptime(job_header[:date_due], "%m/%d/%Y")
+    end
     drawer_type = job_header[:drawer_type]
     bottom_type = job_header[:bottom_type]
-    bottom_notes = job_header[:bottom_notes]
+    bottom_notes = job_header[:bottom_selector]
+    project = job_header[:project]
     totals = job_header[:txt_totals]
     #get total of rows then subtract 1 so that we can start from 0
     row_tally = job_header[:row_tally].to_i - 1
 
     if params[:created_job].to_i > 0
       @new_job = JobHeader.find(params[:created_job].to_i)
-      @new_job.update_attributes(:job => job, :wood_type => wood_type, :inside_edge => inside_edge, :outside_edge => outside_edge, :panel_profile => panel_profile, :date_due => date_due, :drawer_type => drawer_type, :bottom_type => bottom_type, :bottom_notes => bottom_notes, :totals => totals)
+      @new_job.update_attributes(:project => project, :job => job, :wood_type => wood_type, :inside_edge => inside_edge, :outside_edge => outside_edge, :panel_profile => panel_profile, :date_due => date_due, :drawer_type => drawer_type, :bottom_type => bottom_type, :bottom_notes => bottom_notes, :totals => totals)
       JobDetail.destroy_all(:job_id => params[:created_job].to_i)
     else
       @new_job = JobHeader.create(:job => job) do |j|
+        j.project = project
         j.wood_type = wood_type
         j.inside_edge = inside_edge
         j.outside_edge = outside_edge
@@ -125,7 +157,7 @@ class StaticPagesController < ApplicationController
     end
     @new_job.save
 
-    job_details = job_header.except(:job, :wood_type, :inside_edge, :outside_edge, :panel_profile, :date_due, :drawer_type, :bottom_type, :bottom_notes, :row_tally, :txt_totals)
+    job_details = job_header.except(:project, :job, :wood_type, :inside_edge, :outside_edge, :panel_profile, :date_due, :drawer_type, :bottom_type, :bottom_selector, :row_tally, :txt_totals)
     
     (0..row_tally).each do |x|
       i = x.to_s

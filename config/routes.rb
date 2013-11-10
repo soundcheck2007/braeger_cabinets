@@ -4,7 +4,7 @@ BraegerCabinets::Application.routes.draw do
 
   root :to => 'static_pages#home'
   
-  match '/cabinets', to: 'static_pages#cabinets'
+  match '/doors', to: 'static_pages#doors'
   match '/drawer_fronts', to: 'static_pages#drawer_fronts'
   match '/dovetail_drawers', to: 'static_pages#dovetail_drawers'
   match '/search', to: 'static_pages#search'

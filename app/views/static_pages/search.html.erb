@@ -33,11 +33,13 @@
       <br />
       <%= submit_tag "Search", :onclick => 'return check_blank();', :class => 'btn btn-large btn-primary' %>
       <br /><br />
+    </form>
+    <form id="open_job_form">
       <div>
         <%= select_tag 'found_jobs', nil, { :multiple => :true, :disabled => 'disabled', :size => '8' } %>
         <%= select_tag 'found_jobs_info', nil, { :multiple => :true, :disabled => 'disabled', :size => '8' } %>
         <br />
-        <%= submit_tag "Open Job", { :id => "open_job_button", :onclick => 'return false;', :class => 'btn btn-large btn-primary', :disabled => 'disabled' } %>
+        <%= submit_tag "Open Job", { :id => "open_job_button", :onclick => 'return true;', :class => 'btn btn-large btn-primary', :disabled => 'disabled' } %>
       </div>
     </form>
   </div>

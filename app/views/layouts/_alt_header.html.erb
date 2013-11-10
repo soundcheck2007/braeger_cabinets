@@ -1,25 +1,28 @@
+<% if !@job_header %>
+  <% @job_header = {:id => 0, :job => "", :wood_type => "", :drawer_type => "", :bottom_type => "", :bottom_notes => "1", :totals => "" } %>
+<% end %>
 <div style="background-color: #eaeaea; position: relative; left: -45px; width: 1025px; text-align:center">
   <br />
   <div style="position: relative; left: 10px;">
-    JOB: <%= text_field_tag 'job' %>
+    JOB: <%= text_field_tag 'job', @job_header[:job] %>
     <div style="display: inline; position: relative; left: 49px;">
-      TYPE OF WOOD: <%= text_field_tag 'wood_type' %>
+      TYPE OF WOOD: <%= text_field_tag 'wood_type', @job_header[:wood_type] %>
     </div>
   </div>
   <div style="position: relative; left: -15px;">
-    DRAWER TYPE: <%= text_field_tag 'drawer_type' %>
+    DRAWER TYPE: <%= text_field_tag 'drawer_type', @job_header[:drawer_type] %>
     <div style="display: inline; position: relative; left: 25px;">
-      TYPE OF BOTTOMS: <%= text_field_tag 'bottom_type' %>
+      TYPE OF BOTTOMS: <%= text_field_tag 'bottom_type', @job_header[:bottom_type] %>
     </div>
   </div>
   <br />
   <div>
     NOTES: 
-    <%= select_tag "bottom_selector", '
-      <option value="1">Recess Bottom 1/2, Removeable</option>
-      <option value="2">Recess Bottom 1/2, Stationary</option>
-      <option value="3">Recess Bottom 1/4, Removeable</option>
-      <option value="4">Recess Bottom 1/4, Stationary</option>
-      '.html_safe, :style => 'width: 250px' %>
+    <%= select_tag "bottom_selector", options_for_select({
+      "Recess Bottom 1/2, Removeable" => "1",
+      "Recess Bottom 1/2, Stationary" => "2",
+      "Recess Bottom 1/4, Removeable" => "3",
+      "Recess Bottom 1/4, Stationary" => "4"
+    }, @job_header[:bottom_notes]), :style => 'width: 250px' %>
   </div>
 </div>

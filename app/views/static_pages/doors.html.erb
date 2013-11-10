@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Braeger Woodworking Inc. | Cabinets</title>
+  <title>Braeger Woodworking Inc. | Doors</title>
 </head>
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
@@ -16,7 +16,8 @@
     </div>
   </div>
 </header>
-<form action="/cabinets" id="cabinets_form" method="post">
+<form action="/doors" id="doors_form" method="post">
+  <%= hidden_field_tag "project", "doors" %>
   <%= render 'layouts/job_header' %>
   <br />
   <div id="main_body">
@@ -78,6 +79,36 @@
     }
 
     add_custom_values_to_totals();
+  }
+
+  function open_job_check(){
+    var job_id = <%= @job_header[:id] %>;
+    var regex = new RegExp(/<br/g);
+    var breaks = 0;
+    $('#created_job').val(job_id);
+    if(job_id > 0){
+      var job_info = <%= @job_details.to_json.html_safe %>;
+      for(var i = 0; i < job_info.length; i++){
+        if((i % 10) == 0 && i != 0){
+          add_rows();
+        }
+
+        $('#nbr_' + i).val(job_info[i].door_no);
+        $('#qty_' + i).val(job_info[i].door_qty);
+        $('#size_' + i).val(job_info[i].door_size);
+        $('#style_select_' + i).val(job_info[i].door_style);
+        $('#style_rail_info_' + i).html(job_info[i].style_rail_info);
+        $('#border_info_' + i).val(job_info[i].style_rail_info);
+        $('#panel_info_' + i).html(job_info[i].panel_info);
+        $('#center_info_' + i).val(job_info[i].panel_info);
+        $('#notes_' + i).val(job_info[i].notes);
+        
+        breaks = job_info[i].style_rail_info.match(regex).length;
+        if(breaks > 1) {
+          $('#notes_' + i).parent().height(70);
+        }
+      }
+    }
   }
   
 </script>
