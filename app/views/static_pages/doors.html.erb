@@ -105,7 +105,7 @@
         
         breaks = job_info[i].style_rail_info.match(regex).length;
         if(breaks > 1) {
-          $('#notes_' + i).parent().height(70);
+          $('#notes_' + i).parent().height(50 + ((breaks - 1) * 20));
         }
         //Add custom values to array for totals
         if ("<%= @job_header[:project] %>" == "doors"){
