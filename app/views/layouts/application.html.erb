@@ -391,7 +391,7 @@
           custom_panel_height += .625;
           custom_panel_width = top_rail_height - .375;
           msg_four = "<br />" + (qty * parseInt(split_one)) + " - " + center_rail_height + " X " + center_rail_width + " C.R.";
-          panel_msg = (split_one + 1) + " - " + custom_panel_width + " X " + custom_panel_height;
+          panel_msg = ((split_one + 1) * qty) + " - " + custom_panel_width + " X " + custom_panel_height;
         }
         
         //calculate split panel
@@ -425,7 +425,7 @@
           custom_panel_width += .625;
           custom_panel_height = height - (top_rail_width + bottom_rail_width) - .375 + 1;
           msg_four = "<br />" + (qty * parseInt(split_one)) + " - " + center_rail_height + " X " + center_rail_width + " C.R.";
-          panel_msg = (split_one + 1) + " - " + custom_panel_width + " X " + custom_panel_height;
+          panel_msg = ((split_one + 1) * qty) + " - " + custom_panel_width + " X " + custom_panel_height;
         }
         
         //calculate split panel
